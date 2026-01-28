@@ -44,7 +44,8 @@ int main() {
     cout << "==== CRATE INFO ====" << endl;
     cout << "Volume is " << volume << "cubic feet." <<endl;
     cout << "wholesale price is $" << cost <<endl;
-    //cout << ""  
+    cout << "Customer price is $" << customer_price << endl;
+    cout << "Profit per crate: $" << profit << endl;
 
     return 0; 
 }    
