@@ -5,7 +5,7 @@ item costs.
 
 #include <iostream>
 //This is used for the decimal point stuff.
-#include <iomainip>
+#include <iomanip>
 using namespace std;
  
 int main() {
