@@ -20,7 +20,7 @@ int main() {
     //store set-up
     cout <<"Welcome to the store setup program." << endl;
     cout <<"Name of item? ";
-    getline(cin, item_name)//Lets us us"e spaces!
+    getline(cin, item_name);//Lets us us"e spaces!
     cout << "Number of items? ";
     cin >> item_count;
     cout<< "Price each? ";
@@ -31,10 +31,10 @@ int main() {
     //Run the store
 
     //Set double to print with 2 decimal places
-    cout << setprecision(2) fixed;
+    cout << setprecision(2) << fixed;
 
     cout << "Welcome to our " << item_name << "store." << endl;
-    cout << "We have " << item_count << " " item_name << "." << endl1;
+    cout << "We have " << item_count << " "<< item_name << "." << endl;
     cout << "They cost $" << price_each << " each." << endl;
 
     //find out how much the user wants to buy.
@@ -44,7 +44,7 @@ int main() {
     //Calculate the total
     total_price = purchased * price_each;
     cout << "You bought " << purchased << " " << item_name <<"." << endl;
-    cout << "Total price is $" << total_price endl;
+    cout << "Total price is $" << total_price << endl;
         
     return 0;
 }
