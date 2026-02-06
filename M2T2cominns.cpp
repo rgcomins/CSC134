@@ -13,6 +13,7 @@ using namespace std;
 int main() {
 //Define variables
 string meal_name;
+string line = "--------------------------";
 
 const double TAX_RATE = 0.08;
 double meal_price, num_meals, sub_total, total,tax_amount;
@@ -32,7 +33,10 @@ cout << "You ordered " << meal_name << endl;
 //cout << sub_total << endl;
 cout << "Sub Total $ "<< sub_total << endl;
 cout << "TAX       $ " << tax_amount << endl;
+cout << line << endl;
 cout << "Total     $ " << total << endl;
+
+cout << line << endl;
  
 
 }
