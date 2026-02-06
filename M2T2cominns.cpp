@@ -9,6 +9,7 @@ It will include the price of the meal, before tax, the tax, a sub-total, and a t
 #include <iomanip>
 using namespace std;
 
+
 int main() {
 //Define variables
 string meal_name;
