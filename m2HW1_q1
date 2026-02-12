@@ -1,0 +1,24 @@
+/*
+CSC - 134
+comins
+2/12/2026
+The /atm program will generate an account having both a name and number. It will show all 
+transactions including both deposits and withdrawls. Finally the program will calculate the final ballance
+of the account. It will then display the following:
+    
+    the name on the account
+    the account number
+    the final account balance.
+*/
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+//define variables
+first_name
+last_name
+account_name = "last_name" + " first_name"
+account number = 123456789
+
+

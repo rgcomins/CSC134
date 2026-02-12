@@ -1,10 +1,10 @@
 /*
-CSC 134
+SC 134
 M2Lab1 - The Crate Program
 comins
 1/28/26
 
-Find volume of crate
+Find volume of crateC
 Find cost, customer_price, and profit
 Print everything out
 */
