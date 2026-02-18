@@ -33,13 +33,18 @@ int first, second, total;
     //How did we do?
     string result;  //did we win or lose?
 
-    if (total == 7) {
+    if (total == 7 || total == 11) {
         result = "win";
     }
-    else if (total == 11) {
-        result = "win";
+    else if (total == 2 || total == 3 || total == 12) {
+        result = "lose";
     }
-    cout << "Roll results" <<result <<endl;
+    else {
+         result = "point";
+    }
+       
+
+    cout << "Roll results " <<result <<endl;
     return 0;
 
 }
