@@ -1,5 +1,9 @@
-/* This program calculates the area of a rectangle ant 
-the outpute the largest  rectangle.
+/* 
+CSC 134
+m3T1 - The largerest area of two rectangles
+This program calculates the area of two rectangles and outputs the largest of the two.
+comins
+02/20/2026
 */ 
 
 #include <iostream>

@@ -1,12 +1,3 @@
-/*
-SC 134
-m2HW_q3 - The Pizza Program
-comins
-2/13/26
-
-Find number of pizzas needed for the amount of guests invited if each guest gets 3 slices
-of pizza.  The program should calculate and display how many piees of pizza are left over.
-
 */
 
 #include <iostream>

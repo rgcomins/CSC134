@@ -1,0 +1,13 @@
+/* This program generates a receipt for a meal.
+It will include the price of the meal, before tax, the tax, a sub-total, and a total_price. */
+//CSC 134
+// M2T2 (Module 2)
+// Receipt
+
+// magic words
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+
+int main() {

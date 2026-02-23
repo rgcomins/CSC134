@@ -58,6 +58,7 @@ int main() {
     cout << "If we cut the pizza into 8 slices, The area of each slice will be ";
     cout << area_pizza / 8;
 
-
+    return 0;
+    
 
 }
