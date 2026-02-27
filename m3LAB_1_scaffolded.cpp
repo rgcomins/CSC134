@@ -52,6 +52,7 @@ int main()
     // Step 1: Ask if the user wants to travel
     if (!askToTravel())
     {
+
         return 0;
     }
 
@@ -109,7 +110,24 @@ string toLower(const string& s)
 // =============================================================================
 bool askToTravel()
 {
-    // YOUR CODE HERE
+    while (true) {
+        cout << "Do you want to travel to Ohahu, HI? (yes/no)\n";  // from document
+        string response;
+        getline(cin, response);
+
+        response = toLower(response);
+
+        if (response == "yes") {
+            return true;  // continue program
+        }
+        else if (response == "no") {
+            cout << "Thank you. Have a great day!\n";
+            return false;  // exit program
+        }
+        else {
+            cout << "Please enter 'yes' or 'no'.\n";
+        }
+    }
 
 
 }
@@ -127,7 +145,17 @@ bool askToTravel()
 // =============================================================================
 string getTravelDates()
 {
-    // YOUR CODE HERE
+    string dates;
+    while (true) {
+        cout << "Enter your travel dates (MM/DD/YYYY - MM/DD/YYYY):\n";  // from document
+        getline(cin, dates);
+
+        if (dates.find('-') != string::npos) {
+            break;
+        } else {
+            cout << "Invalid format. Please try again.\n";
+        }
+    }
 
 
 }
