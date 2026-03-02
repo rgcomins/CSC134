@@ -151,7 +151,7 @@ string getTravelDates()
         getline(cin, dates);
 
         if (dates.find('-') != string::npos) {
-            break;
+            return dates;
         } else {
             cout << "Invalid format. Please try again.\n";
         }
@@ -178,7 +178,12 @@ string getTravelDates()
 // =============================================================================
 string getString(string prompt)
 {
-    // YOUR CODE HERE
+    cout << "Please enter your " << prompt << ":";
+    string entry;
+    getline(cin, entry);
+    return entry;
+
+
 
 
 }
@@ -197,7 +202,11 @@ string getString(string prompt)
 // =============================================================================
 string getTravelClass()
 {
-    // YOUR CODE HERE
+    cout << "Please enter your travel class (economy/first): " << endl;
+    string travel_class;
+    cin >> travel_class;
+    return travel_class;
+    
 
 
 }

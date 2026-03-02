@@ -1,3 +1,14 @@
+/*
+SC 134
+M2Lab1 - The Booking Program
+comins
+02/27/202626
+
+Boo
+Find cost, customer_price, and profit
+Print everything out
+*/
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
