@@ -125,13 +125,22 @@ void question4() {
     srand(seed);
     // Roll two dice and show the results
     int first, second, total;
-    first = (rand() % 10) + 1;;
-    second = (rand() % 10) + 1;
+    first = (rand() % 9) + 1;
+    second = (rand() % 9) + 1;
     total = first + second;
 
     cout << first << " + " << second << " = " << "?" << endl;
-    
+    //cout << first << " + " << second << " = " << total <<  endl;
 
+    // Create variables  
+    int answer;
+    cin >> answer;
+    if (total == answer ) {
+        cout << "Your answer is correct." << endl;
+    }
+    else if(answer != total){
+         cout << "Your answer is Incorrect" << endl;
+    }
 }
 
 
