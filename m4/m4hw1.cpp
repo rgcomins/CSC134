@@ -15,7 +15,7 @@ int main() {
     cout << "The Multiplication Table" << endl;
     const int MIN = 1;
     const int MAX = 12;
-    int input = 5;
+    int input = num_get >> input;
     int num = MIN;
     int multiplied;
     cout << "Number\tNumber multiplied\n";

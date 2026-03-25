@@ -1,0 +1,49 @@
+The next assignment is M5LAB1, and it's structured something like this:
+
+m5lab1.h contains all of the "choice" functions
+
+m5lab1.cpp contains the main() and utility functions
+
+
+
+Here's some options the instructor mentioned, we can pick from them or not:
+
+Part 2 - Adding more choices
+
+After we get the basic menu working, we'll add more functions for the different parts of the story.
+
+To do this you'll want to follow these instructions:
+
+
+
+
+
+Come up with a new story branch and give it a name. (This should be words_connected_with_underscores).
+
+
+
+Add the function prototype at the top of the file, above main(), with the others.
+
+
+
+Add the function definition (the full function) at the bottom of the file, below main(), with the others.
+
+
+
+Now call the function somewhere in the story to add the new branch!
+
+To complete this Lab, you should add at least two story branch functions to the program. I've already set up the choices for choice_back_door and choice_go_home, so you can just add code to those, or you can make totally new choices.
+
+If You Already Have This Down...
+
+
+
+Storing Data: Whether it's in global variables, an array, or using object oriented code like structs or classes, we can add in more complex data if your game needs it. Maybe your player character has stats, or hit points, or money... (M5LAB_A, available from your instructor, gives some ways you could do this)
+
+
+
+
+
+What I really want to do is:
+
+Enable the program to develop a more detailed trip plan.  It should include options for trip dates, type of travel either economy or first/business, destination and so on. The code should be very well documented to explain each line.
