@@ -1,3 +1,6 @@
+First prompt:
+Told Claude to look at the files in the "notes" folder.
+
 The next assignment is M5LAB1, and it's structured something like this:
 
 m5lab1.h contains all of the "choice" functions
@@ -47,3 +50,7 @@ Storing Data: Whether it's in global variables, an array, or using object orien
 What I really want to do is:
 
 Enable the program to develop a more detailed trip plan.  It should include options for trip dates, type of travel either economy or first/business, destination and so on. The code should be very well documented to explain each line.
+as discussed above, look at the assignment HTML instructions, and the M3LAB1 prototype we're         
+starting from.                                                                                                                                                          
+                                                                                                                                                                        
+Then follow the instructions to help this user build M5LAB1.cpp and M5LAB1.h using a similar style to their existing code 
