@@ -2,14 +2,13 @@
 // M5HW1 - Sample Setup
 // cominsr
 // 4/1/26
-// Not answering the questions, just setting up the structure.
 #include <iostream>
 using namespace std;
 
 // List all question prototypes here
 void question1();
 void question2();
-// rest go here
+void question3();
 
 
 // main() here
@@ -20,7 +19,7 @@ int main() {
 
     question1();
     question2();
-    // and so on
+    question3();    // and so on
     return 0;
 }
 
@@ -54,5 +53,57 @@ void question1() {
 }
 
 void question2() {
-    cout << "Question 2" << endl;
+    cout << "Question 2" << endl;//Find the volume of a box
+    cout << " Get the dimensions of a Box " << endl;
+    double length,width,height,volume;
+
+    cout << "Enter the length: ";
+    cin >> length;
+    cout << "Enter the width: ";
+    cin >> width;
+    cout << "Enter the height ";
+    cin >> height;
+
+    //Do the calculations
+    volume = length * width * height;
+    cout << "The volume of the box is: " << volume << endl ;
+}
+void question3() {
+    //Define the variables
+    int num;
+    string Roman_Numeral;
+
+    cout << "Enter a number from 1 to 10: ";
+    cin >> num;
+    if(num == 1) {
+        Roman_Numeral = "I";
+    }
+    else if(num == 2){
+        Roman_Numeral = "II";
+    }
+    else if(num == 3){
+        Roman_Numeral = "III";
+    }
+    else if(num == 4){
+        Roman_Numeral = "IV";
+    }
+    else if(num == 5){
+        Roman_Numeral = "V";
+    }
+    else if(num == 6){
+        Roman_Numeral = "VI";
+    }
+    else if(num == 7){
+        Roman_Numeral = "VII";
+    }
+    else if(num == 8){
+        Roman_Numeral = "VIII";
+    }
+    else if(num == 9){
+        Roman_Numeral = "IX";
+    }   
+    else if(num == 10) {
+        Roman_Numeral = "X";
+    }
+    cout << "The Roman Numeral is " << Roman_Numeral;
 }
