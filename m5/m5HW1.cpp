@@ -3,13 +3,14 @@
 // cominsr
 // 4/1/26
 #include <iostream>
+#include<numbers>
 using namespace std;
 
 // List all question prototypes here
 void question1();
 void question2();
 void question3();
-
+void question4();
 
 // main() here
 int main() {
@@ -17,9 +18,10 @@ int main() {
     // Question 6: Print a menu so they can choose a question
     // Until I do question 6, they will all run one at a time
 
-    question1();
-    question2();
-    question3();    // and so on
+    //question1();
+    //question2();
+    //question3();    // and so on
+    question4();
     return 0;
 }
 
@@ -106,4 +108,52 @@ void question3() {
         Roman_Numeral = "X";
     }
     cout << "The Roman Numeral is " << Roman_Numeral;
+}
+
+void question4() {
+    //Define the variables
+    int choice; // stores the menu choice
+    double area_of_circle,area_of_rectangle,area_of_triangle,length,width,height,radius,base;
+    const double PI = 3.14159;
+    cout << "Geometery Xalculator "<< endl;
+    cout << "1. Calculate the area of a Circle " << endl;
+    cout << "2. Calculate the area of a Rectangle " << endl;
+    cout << "3. Calculate the area of a Triangle " << endl;
+    cout << "4. Quit " << endl;
+    cout << "Enter your choice (1-4) " << endl;
+
+    cin >> choice;
+    cout << "You entered choice: " << choice << endl;   
+    if(choice == 1) {
+        cout << "Enter the radius ";
+        cin >> radius;
+        area_of_circle = PI * radius * radius;
+        cout << "The area of the circle is " << area_of_circle << endl; 
+
+    }
+    else if(choice == 2) {
+                
+        cout << "Enter the length:" << endl;
+        cin >> length ;
+        cout << "Enter the width: " << endl;
+        cin >> width;
+        area_of_rectangle = length * width;
+        cout <<"The area of the rectangle is " << area_of_rectangle<< endl; 
+    }
+    else if(choice == 3) {
+        //area_of_triangle = base * height * 0.5;
+
+        cout << "Enter the base: " << endl;
+        cin >> base;
+        cout << "Enter height: " << endl;
+        cin >> height;
+        area_of_triangle = base * height * 0.5;
+        cout << "The area of the Triangle is " << area_of_triangle << endl;
+    }
+    else if(choice == 4){
+
+        cout << "Good-bye" << endl;
+        return;
+        }
+
 }
