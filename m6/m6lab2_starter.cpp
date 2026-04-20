@@ -99,6 +99,19 @@ int main()
         "An untouched paradise of white sand and turquoise water. Windsurfers glide across the bay; jungle trails await inland."
     };
 
+    // ----- Tour descriptions and tracking -----
+    // tourDescriptions[room] gives the activity blurb for that location.
+    string tourDescriptions[NUM_ROOMS] = {
+        "You spend the afternoon at Waikiki Beach, learning to surf with a local instructor. The waves are perfect for beginners, and you catch your first wave all the way to shore!",
+        "You hike the Diamond Head trail, climbing 560 feet to the crater's rim. The panoramic views of Honolulu and the Pacific Ocean are breathtaking from the top.",
+        "You visit the North Shore during surf season. Professional surfers demonstrate their skills on massive waves, and you learn about the history of this surfing mecca.",
+        "You take a guided tour of Pearl Harbor, visiting the USS Arizona Memorial. The stories of heroism and sacrifice move you deeply as you reflect on this pivotal moment in history.",
+        "You explore Kailua Beach, trying windsurfing for the first time. The steady trade winds make it perfect for beginners, and you glide across the turquoise waters with surprising ease."
+    };
+
+    // Track which locations have been toured (starts false for all)
+    bool touredLocations[NUM_ROOMS] = {false, false, false, false, false};
+
     // ----- The adjacency table (a 2D array) -----
     // connections[fromRoom][direction] = destination room (or NO_CONNECTION).
     int connections[NUM_ROOMS][NUM_DIRECTIONS];
@@ -137,6 +150,7 @@ int main()
     cout << "=============================" << endl;
     cout << "Commands: north / south / east / west   (or n/s/e/w)" << endl;
     cout << "          look   — re-describe this location" << endl;
+    cout << "          tour   — experience activities at this location" << endl;
     cout << "          quit   — end the tour" << endl;
 
     // ----- Game loop -----
@@ -158,6 +172,50 @@ int main()
         if (command == "look" || command == "l")
         {
             // Loop back around; the top of the loop re-prints the room.
+            continue;
+        }
+        if (command == "tour" || command == "t")
+        {
+            // Check if already toured this location
+            if (touredLocations[currentRoom])
+            {
+                cout << "You've already toured " << roomNames[currentRoom] << ". Try a different location!" << endl;
+            }
+            else
+            {
+                // Mark as toured and show the tour description
+                touredLocations[currentRoom] = true;
+                cout << "\n*** TOURING " << roomNames[currentRoom] << " ***" << endl;
+                cout << tourDescriptions[currentRoom] << endl;
+                
+                // Check win condition: all locations toured
+                bool allToured = true;
+                for (int i = 0; i < NUM_ROOMS; i++)
+                {
+                    if (!touredLocations[i])
+                    {
+                        allToured = false;
+                        break;
+                    }
+                }
+                
+                if (allToured)
+                {
+                    cout << "\n🎉 CONGRATULATIONS! You've toured all five Hawaii locations! 🎉" << endl;
+                    cout << "You've completed the ultimate Hawaii experience!" << endl;
+                    running = false;
+                    continue;
+                }
+                else
+                {
+                    int touredCount = 0;
+                    for (int i = 0; i < NUM_ROOMS; i++)
+                    {
+                        if (touredLocations[i]) touredCount++;
+                    }
+                    cout << "\nGreat tour! " << (NUM_ROOMS - touredCount) << " locations left to explore." << endl;
+                }
+            }
             continue;
         }
 
