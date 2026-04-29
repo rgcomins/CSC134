@@ -16,13 +16,12 @@ int main() {
     string * pName = &name;
 
     setName (name);
-    
+
     cout << "name = " <<name << endl;
     cout << "pName =  " << pName << endl;
     cout << "*pName = " << *pName << endl;
 
     return 0;
-
     
 }
 
