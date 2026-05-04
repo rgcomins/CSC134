@@ -1,7 +1,8 @@
 /*
-
-
-
+CSC 134
+Assignment: M7
+cominsr
+04/27/2026
 */
 
 #include<iostream>
@@ -49,7 +50,7 @@ int main() {
     cout << rest1.getName() << endl;
     cout << rest1.getRating() << endl;
 
-    // Make another uing user input
+    // Make another using user input
     Restaurant rest2 = Restaurant("", 00);
 
     string n;
