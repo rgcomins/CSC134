@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hale Koa — Rooms &amp; Booking</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; background: #f5f7f8; }
+        h1 { margin-bottom: 4px; }
+        .lede { color: #555; margin-top: 0; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin: 20px 0 32px;
+        }
+        .room-card {
+            background: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+        }
+        .room-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        .room-card .meta {
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .room-card .name { font-weight: 600; }
+        .room-card .price { color: #008080; font-weight: 700; }
+
+        form#Tripform {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            max-width: 640px;
+        }
+        form#Tripform label { display: block; margin-top: 10px; }
+        form#Tripform input[type="text"],
+        form#Tripform input[type="number"],
+        form#Tripform input[type="date"],
+        form#Tripform select,
+        form#Tripform textarea {
+            margin-bottom: 10px;
+        }
+        .style-row label {
+            color: white;
+            padding: 5px 8px;
+            display: inline-block;
+            margin-right: 6px;
+            border-radius: 4px;
+        }
+        .style-luxury   { background: #ff6347; }
+        .style-budget   { background: #4682b4; }
+        .style-adv      { background: #32cd32; }
+        textarea#comments { background: lightgreen; color: black; }
+        input[type="submit"] {
+            background: #00ced1; color: white; padding: 10px 16px;
+            border: none; border-radius: 5px; cursor: pointer;
+        }
+        input[type="reset"] {
+            background: #ff4500; color: white; padding: 10px 16px;
+            border: none; border-radius: 5px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Rooms available at the Hale Koa</h1>
+    <p class="lede">Pick a room below, then fill out the booking form to see your trip total.</p>
+
+    <!-- Room gallery driven by ROOMS dict from app.py -->
+    <section class="gallery">
+        {% for name, info in rooms.items() %}
+        <article class="room-card">
+            <img src="{{ url_for('static', filename=info.image) }}" alt="{{ name }} room">
+            <div class="meta">
+                <span class="name">{{ name }}</span>
+                <span class="price">${{ "{:,.2f}".format(info.price) }}/night</span>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+
+    <form id="Tripform" action="{{ url_for('trip_summary') }}" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="dates">Dates of Travel (start date):</label>
+        <input type="date" id="dates" name="dates" required>
+
+        <label for="ticketPrice">Price of Tickets:</label>
+        <input type="number" id="ticketPrice" name="ticketPrice" min="0" placeholder="$" required>
+
+        <label for="Rooms">Type of Room:</label>
+        <select id="Rooms" name="Rooms" required>
+            {% for name, info in rooms.items() %}
+            <option value="{{ name }}|{{ info.price }}">{{ name }} — ${{ "{:,.2f}".format(info.price) }}/night</option>
+            {% endfor %}
+        </select>
+
+        <label for="num_nights">Number of nights in the hotel:</label>
+        <input type="number" id="num_nights" name="num_nights" min="1" required>
+
+        <label>Things to Do:</label>
+        <label><input type="checkbox" name="activity" value="surfing|125"> Surfing ($125)</label>
+        <label><input type="checkbox" name="activity" value="hiking|75"> Hiking ($75)</label>
+        <label><input type="checkbox" name="activity" value="snorkeling|149"> Snorkeling ($149)</label>
+        <label><input type="checkbox" name="activity" value="luau|130"> Attend a Luau ($130)</label>
+
+        <label>Preferred Travel Style:</label>
+        <div class="style-row">
+            <label class="style-luxury"><input type="radio" name="style" value="luxury"> Luxury</label>
+            <label class="style-budget"><input type="radio" name="style" value="budget"> Budget</label>
+            <label class="style-adv"><input type="radio" name="style" value="adventure"> Adventure</label>
+        </div>
+
+        <label for="comments">Additional Comments:</label>
+        <textarea id="comments" name="comments" rows="4" cols="50" maxlength="500"></textarea>
+
+        <br><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+
+    <br>
+    <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/RUb-weK-_dI?si=sKNHSHih5JZt4ZI5"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</body>
+</html>
