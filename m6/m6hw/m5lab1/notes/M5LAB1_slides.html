@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M5LAB1 — Choose Your Own Adventure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #0d1117;
+    color: #c9d1d9;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .slide {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 4rem 6rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in;
+  }
+  .slide.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #79c0ff;
+    margin-bottom: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: #8b949e;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  p, li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #c9d1d9;
+    max-width: 800px;
+  }
+
+  .highlight { color: #7ee787; font-weight: 700; }
+  .warn { color: #f0883e; font-weight: 700; }
+  .blue { color: #58a6ff; }
+  .purple { color: #d2a8ff; }
+  .dim { color: #6e7681; }
+
+  pre {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.2rem 1.6rem;
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 780px;
+    width: 100%;
+    overflow-x: auto;
+    margin: 0.8rem 0;
+  }
+
+  .ascii-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    max-width: 700px;
+    white-space: pre;
+    color: #7ee787;
+  }
+
+  .two-col {
+    display: flex;
+    gap: 2rem;
+    max-width: 900px;
+    width: 100%;
+    text-align: left;
+  }
+  .two-col > div { flex: 1; }
+
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    margin: 0.5rem 0;
+  }
+  .card-title {
+    color: #58a6ff;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  .card p { font-size: 0.9rem; }
+
+  .step-list {
+    text-align: left;
+    max-width: 750px;
+    list-style: none;
+    counter-reset: steps;
+  }
+  .step-list li {
+    counter-increment: steps;
+    padding: 0.6rem 0;
+    padding-left: 2.5rem;
+    position: relative;
+  }
+  .step-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    width: 1.8rem;
+    height: 1.8rem;
+    background: #1f6feb;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    top: 0.5rem;
+  }
+
+  .tier-table {
+    border-collapse: collapse;
+    max-width: 750px;
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  .tier-table th {
+    background: #1f6feb;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    font-weight: 700;
+  }
+  .tier-table td {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #30363d;
+  }
+  .tier-table tr:nth-child(even) td { background: #161b22; }
+
+  /* Progress bar */
+  #progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #1f6feb;
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  /* Nav */
+  #nav {
+    position: fixed;
+    bottom: 1rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 100;
+  }
+  #nav button {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  #nav button:hover { background: #30363d; }
+
+  #slide-counter {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 1.5rem;
+    color: #484f58;
+    font-size: 0.8rem;
+    z-index: 100;
+  }
+
+  .prompt-glow {
+    display: inline-block;
+    color: #7ee787;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .big-emoji { font-size: 3rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<div class="slide active" id="s1">
+  <div class="big-emoji">⚔️</div>
+  <h1>Choose Your Own Adventure</h1>
+  <div class="subtitle">M5LAB1 — Your first multi-function program</div>
+  <p class="dim" style="font-size: 0.85rem; margin-top: 2rem;">
+    ← → arrow keys or buttons to navigate <span class="prompt-glow">▊</span>
+  </p>
+</div>
+
+<!-- ==================== SLIDE 2: THE BIG IDEA ==================== -->
+<div class="slide" id="s2">
+  <h2>The Big Idea</h2>
+  <p style="margin-bottom: 1.5rem;">
+    Every function you've written so far has been <span class="warn">alone.</span><br>
+    Today, your functions work <span class="highlight">together.</span>
+  </p>
+  <div class="ascii-box">
+         main()
+           │
+     ┌─────┴─────┐
+     ▼            ▼
+ main_menu()   (quit)
+   │  │  │
+   ▼  ▼  ▼
+ front  back  go
+ door   door  home
+  │              │
+  ▼              ▼
+fight         "boring
+dragon        ending"
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.9rem;" class="dim">
+    Each box = one function. Each arrow = a function call.
+  </p>
+</div>
+
+<!-- ==================== SLIDE 3: TWO FILES ==================== -->
+<div class="slide" id="s3">
+  <h2>Two Files, Two Jobs</h2>
+  <div class="two-col" style="margin-top: 1rem;">
+    <div class="card">
+      <div class="card-title">m5lab1.cpp — The Engine 🔧</div>
+      <p><span class="dim">You mostly <strong>don't touch this.</strong></span></p>
+      <p style="margin-top:0.5rem;">Contains:</p>
+      <p>• <span class="blue">main()</span> — starts the game</p>
+      <p>• <span class="blue">main_menu()</span> — the menu loop</p>
+      <p>• <span class="purple">global variables</span> — game state</p>
+      <p>• <span class="highlight">#include "m5lab1.h"</span></p>
+    </div>
+    <div class="card">
+      <div class="card-title">m5lab1.h — Your Story 📖</div>
+      <p><span class="dim">This is <strong>where you work.</strong></span></p>
+      <p style="margin-top:0.5rem;">Contains:</p>
+      <p>• <span class="blue">prototypes</span> — function declarations</p>
+      <p>• <span class="blue">definitions</span> — the actual code</p>
+      <p>• Each function = one story branch</p>
+      <p>• <span class="highlight">Add new functions here!</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: THE PATTERN ==================== -->
+<div class="slide" id="s4">
+  <h2>The Pattern — Every New Branch</h2>
+  <ol class="step-list">
+    <li>
+      <strong>Name it.</strong> What does this branch do?<br>
+      <span class="dim">Example:</span> <span class="highlight">choice_fight_dragon</span>
+    </li>
+    <li>
+      <strong>Prototype it.</strong> Declare it at the top of the .h file.<br>
+      <span class="blue">void choice_fight_dragon();</span> <span class="dim">← semicolon!</span>
+    </li>
+    <li>
+      <strong>Define it.</strong> Write the full function below.<br>
+      <span class="blue">void choice_fight_dragon() { ... }</span> <span class="dim">← no semicolon!</span>
+    </li>
+    <li>
+      <strong>Call it.</strong> Add it to the menu or call from another branch.<br>
+      <span class="purple">case 5: choice_fight_dragon(); break;</span>
+    </li>
+  </ol>
+</div>
+
+<!-- ==================== SLIDE 5: CODE EXAMPLE ==================== -->
+<div class="slide" id="s5">
+  <h2>What a Branch Looks Like</h2>
+  <pre><code><span class="dim">// In m5lab1.h</span>
+
+<span class="dim">// Step 1: Prototype (at the top)</span>
+<span class="blue">void</span> choice_fight_dragon();
+
+<span class="dim">// Step 2: Definition (below)</span>
+<span class="blue">void</span> choice_fight_dragon()
+{
+    cout << <span class="highlight">"The dragon rears back!"</span> << endl;
+    cout << <span class="highlight">"1. Attack with sword"</span> << endl;
+    cout << <span class="highlight">"2. Run away"</span> << endl;
+
+    <span class="blue">int</span> choice;
+    cin >> choice;
+
+    <span class="blue">if</span> (choice == 1) {
+        cout << <span class="highlight">"You strike! -50 dragon HP!"</span> << endl;
+        health -= 20;  <span class="dim">// global variable</span>
+    } <span class="blue">else</span> {
+        cout << <span class="highlight">"You escape... barely."</span> << endl;
+        <span class="purple">choice_run_away();</span>  <span class="dim">// call another branch!</span>
+    }
+}</code></pre>
+</div>
+
+<!-- ==================== SLIDE 6: STORY MAP ==================== -->
+<div class="slide" id="s6">
+  <h2>Step Zero — Draw Your Map First</h2>
+  <p style="margin-bottom: 1.2rem;">
+    Before you write <span class="warn">any code</span>, sketch your story on paper.
+  </p>
+  <div class="ascii-box" style="color: #d2a8ff;">
+    ┌───────────┐
+    │   START   │
+    └─────┬─────┘
+      ┌───┴───┐
+      ▼       ▼
+   ┌─────┐ ┌─────┐
+   │ ??? │ │ ??? │    ← Each box = one function
+   └──┬──┘ └──┬──┘
+    ┌─┴─┐   ┌─┴─┐
+    ▼   ▼   ▼   ▼
+   ???  ???  ???  ???  ← Each arrow = a function call
+    │    │    │    │
+    ▼    ▼    ▼    ▼
+   END  END  END  END  ← At least 2 different endings
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.95rem;">
+    <span class="highlight">Rules:</span> Minimum 6 boxes. At least 2 endings.
+    Each box gets a function name.
+  </p>
+</div>
+
+<!-- ==================== SLIDE 7: IT'S NOT JUST FANTASY ==================== -->
+<div class="slide" id="s7">
+  <h2>It Doesn't Have to Be Dragons</h2>
+  <p style="margin-bottom: 1.5rem;">The <span class="blue">code pattern</span> is the same for any story.</p>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="card-title">🧟 Horror</div>
+        <p>"The door creaks open..."</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🚀 Sci-Fi</div>
+        <p>"The airlock is depressurizing!"</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🎓 College Life</div>
+        <p>"Your alarm didn't go off..."</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">🍳 Cooking Show</div>
+        <p>"The soufflé is collapsing!"</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🔍 Mystery</div>
+        <p>"You find a bloody knife..."</p>
+      </div>
+      <div class="card">
+        <div class="card-title">💼 Job Interview</div>
+        <p>"Why should we hire you?"</p>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.9rem;" class="dim">
+    Pick something that's fun for <em>you.</em> You'll write better code.
+  </p>
+</div>
+
+<!-- ==================== SLIDE 8: GRADE TIERS ==================== -->
+<div class="slide" id="s8">
+  <h2>What You Need</h2>
+  <table class="tier-table" style="margin-top: 1rem;">
+    <tr><th>Level</th><th>Requirements</th></tr>
+    <tr>
+      <td><span class="highlight">C (70%)</span></td>
+      <td>Menu works + 2 story branches with text</td>
+    </tr>
+    <tr>
+      <td><span class="blue">B (85%)</span></td>
+      <td>4+ branches, nested choices, game state variable</td>
+    </tr>
+    <tr>
+      <td><span class="purple">A (95%+)</span></td>
+      <td>6+ branches, multiple state vars, 2+ endings that depend on choices</td>
+    </tr>
+    <tr>
+      <td><span class="warn">Bonus</span></td>
+      <td>Inventory, combat, randomness, ASCII art, ANSI color</td>
+    </tr>
+  </table>
+  <p style="margin-top: 1.5rem; font-size: 0.95rem;">
+    <span class="warn">Don't forget:</span> Save your AI prompts in
+    <span class="highlight">M5LAB1_prompts.txt</span>
+  </p>
+</div>
+
+<!-- ==================== SLIDE 9: COMMON MISTAKES ==================== -->
+<div class="slide" id="s9">
+  <h2>The Two Bugs You'll Hit</h2>
+  <div class="two-col" style="margin-top: 1rem;">
+    <div class="card">
+      <div class="card-title" style="color: #f85149;">Bug #1: "was not declared"</div>
+      <pre style="font-size: 0.8rem; border: none; padding: 0.8rem; margin: 0.5rem 0;"><code><span class="dim">// You wrote this:</span>
+<span class="blue">void</span> choice_fight_dragon()
+{
+    ...
+}
+
+<span class="dim">// But forgot the prototype!</span>
+<span class="warn">// Add at the top of .h:</span>
+<span class="highlight">void choice_fight_dragon();</span></code></pre>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color: #f85149;">Bug #2: "undefined reference"</div>
+      <pre style="font-size: 0.8rem; border: none; padding: 0.8rem; margin: 0.5rem 0;"><code><span class="dim">// You wrote the prototype:</span>
+<span class="blue">void</span> choice_fight_dragon();
+
+<span class="dim">// But the definition says:</span>
+<span class="blue">void</span> choice_fight_<span class="warn">Dra</span>gon()
+                   <span class="warn">^^^</span>
+<span class="dim">// Names must match EXACTLY</span></code></pre>
+    </div>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.9rem;">
+    <span class="highlight">Pro tip:</span> Copy-paste function names. Don't retype them.
+  </p>
+</div>
+
+<!-- ==================== SLIDE 10: GO ==================== -->
+<div class="slide" id="s10">
+  <div class="big-emoji">🗡️</div>
+  <h1>Your Quest Begins</h1>
+  <div style="margin-top: 1.5rem; text-align: left; max-width: 500px;">
+    <p>☐ Draw your story map on paper</p>
+    <p style="margin-top:0.5rem;">☐ Open the starter code</p>
+    <p style="margin-top:0.5rem;">☐ Get Part 1 working (the menu)</p>
+    <p style="margin-top:0.5rem;">☐ Add your branches in <span class="highlight">m5lab1.h</span></p>
+    <p style="margin-top:0.5rem;">☐ Test it. Play it. Break it. Fix it.</p>
+    <p style="margin-top:0.5rem;">☐ Save your prompts!</p>
+  </div>
+  <p style="margin-top: 2rem; font-size: 0.9rem;" class="dim">
+    Peer playtesting at the end of class — make it fun!
+    <span class="prompt-glow">▊</span>
+  </p>
+</div>
+
+<!-- ==================== NAV ==================== -->
+<div id="progress" style="width: 10%;"></div>
+<div id="slide-counter">1 / 10</div>
+<div id="nav">
+  <button onclick="go(-1)">← Prev</button>
+  <button onclick="go(1)">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const total = slides.length;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+    document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+  }
+
+  function go(dir) { show(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+
+========================================
+        WELCOME TO TRIP PLANNER         
+    Plan your perfect getaway today!    
+========================================
+
+Ready to start planning your trip? (yes/no): yes
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : (not set)
+  2. Travel Dates : (not set)
+  3. Travel Class : (not set)
+  4. Hotel        : (not set)
+  5. Activities   : (none)
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 1
+
+--- SELECT YOUR DESTINATION ---
+Available destinations (economy flight estimate):
+  1. Oahu, Hawaii  (~$600 flight)
+  2. Cancun, Mexico  (~$500 flight)
+  3. Paris, France  (~$1200 flight)
+  4. Tokyo, Japan  (~$1400 flight)
+  5. New York City, USA  (~$300 flight)
+
+Enter destination number (1-5): 1
+
+✔ Destination set to: Oahu, Hawaii
+
+--- DESTINATION DETAILS ---
+Oahu is home to Waikiki Beach and the Pearl Harbor memorial.
+Best travel months: April–June and September–November.
+
+Would you like to browse activities for Oahu, Hawaii now? (yes/no): yes
+
+--- ADD ACTIVITIES ---
+Add activities for your trip to Oahu, Hawaii.
+(Type each activity and press Enter. Type 'done' when finished.)
+  Activity 1: dinner cruise
+  Activity 2: submarine tour
+  Activity 3: done
+✔ 2 activities saved.
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : (not set)
+  3. Travel Class : (not set)
+  4. Hotel        : (not set)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 2
+
+--- SELECT TRAVEL DATES ---
+Enter travel dates (MM/DD/YYYY - MM/DD/YYYY): 06/02/2026 - 06/12/2026
+✔ Travel dates set to: 06/02/2026 - 06/12/2026
+How many nights will you stay? 10
+✔ Number of nights set to: 10
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : (not set)
+  4. Hotel        : (not set)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 3
+
+--- SELECT TRAVEL CLASS ---
+  1. Economy       (base flight price)
+  2. Business      (2x base flight price)
+  3. First Class   (3x base flight price)
+
+Enter class (1-3): 3
+✔ Travel class set to: First Class
+   Updated flight cost: $1800
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : (not set)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 4
+
+--- SELECT YOUR HOTEL ---
+  1. Budget Inn      (no-frills, clean, central location)  — $120/night
+  2. Comfort Suites  (pool, breakfast included)  — $220/night
+  3. Luxury Resort   (full service, ocean/city view)  — $400/night
+
+Enter hotel choice (1-3): 3
+✔ Hotel set to: Luxury Resort   (full service, ocean/city view)
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : Luxury Resort   (full service, ocean/city view)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 5
+
+--- ADD ACTIVITIES ---
+Add activities for your trip to Oahu, Hawaii.
+(Type each activity and press Enter. Type 'done' when finished.)
+  Activity 1: dinner cruise
+  Activity 2: submarine tour
+  Activity 3: done
+✔ 2 activities saved.
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : Luxury Resort   (full service, ocean/city view)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 6
+
+========================================
+          YOUR TRIP PLAN SUMMARY        
+========================================
+  Destination:      Oahu, Hawaii
+  Travel Dates:     06/02/2026 - 06/12/2026
+  Nights:           10
+  Travel Class:     First Class
+  Flight Cost:      $1800
+  Hotel:            Luxury Resort   (full service, ocean/city view)
+  Hotel Total:      $4000  (10 nights x $400)
+  Activities:       dinner cruise, submarine tour
+----------------------------------------
+  TOTAL ESTIMATED COST:  $5800
+========================================
+
+★  LUXURY TRIP UNLOCKED  ★
+You're planning a top-tier getaway!
+Expect premium service and unforgettable memories.
+Don't forget travel insurance for a trip this special.
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : Luxury Resort   (full service, ocean/city view)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 6
+
+========================================
+          YOUR TRIP PLAN SUMMARY        
+========================================
+  Destination:      Oahu, Hawaii
+  Travel Dates:     06/02/2026 - 06/12/2026
+  Nights:           10
+  Travel Class:     First Class
+  Flight Cost:      $1800
+  Hotel:            Luxury Resort   (full service, ocean/city view)
+  Hotel Total:      $4000  (10 nights x $400)
+  Activities:       dinner cruise, submarine tour
+----------------------------------------
+  TOTAL ESTIMATED COST:  $5800
+========================================
+
+★  LUXURY TRIP UNLOCKED  ★
+You're planning a top-tier getaway!
+Expect premium service and unforgettable memories.
+Don't forget travel insurance for a trip this special.
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : Luxury Resort   (full service, ocean/city view)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 6
+
+========================================
+          YOUR TRIP PLAN SUMMARY        
+========================================
+  Destination:      Oahu, Hawaii
+  Travel Dates:     06/02/2026 - 06/12/2026
+  Nights:           10
+  Travel Class:     First Class
+  Flight Cost:      $1800
+  Hotel:            Luxury Resort   (full service, ocean/city view)
+  Hotel Total:      $4000  (10 nights x $400)
+  Activities:       dinner cruise, submarine tour
+----------------------------------------
+  TOTAL ESTIMATED COST:  $5800
+========================================
+
+★  LUXURY TRIP UNLOCKED  ★
+You're planning a top-tier getaway!
+Expect premium service and unforgettable memories.
+Don't forget travel insurance for a trip this special.
+
+========================================
+       TRIP PLANNER  —  MAIN MENU      
+========================================
+  1. Destination  : Oahu, Hawaii
+  2. Travel Dates : 06/02/2026 - 06/12/2026
+  3. Travel Class : First Class
+  4. Hotel        : Luxury Resort   (full service, ocean/city view)
+  5. Activities   : dinner cruise, submarine tour
+  6. View Trip Summary
+  7. Quit
+----------------------------------------
+Choice (1-7): 7
+
+Thank you for using Trip Planner!
+Safe travels wherever the journey takes you.
+[1] + Done                       "/usr/bin/gdb" --interpreter=mi --tty=${DbgTerm} 0<"/tmp/Microsoft-MIEngine-In-2ikhj32a.0uq" 1>"/tmp/Microsoft-MIEngine-Out-e2gcja5l.q4f"
+@rgcomins ➜ /workspaces/CSC134 (main) $ 

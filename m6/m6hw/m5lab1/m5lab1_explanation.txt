@@ -1,0 +1,511 @@
+m5lab1 CODE EXPLANATION
+For beginning programmers
+================================================================================
+
+
+================================================================================
+m5lab1.cpp — The Engine
+================================================================================
+
+
+--------------------------------------------------------------------------------
+The #include lines and using namespace std
+--------------------------------------------------------------------------------
+
+    #include <iostream>    // cout, cin, endl
+    #include <string>      // string, getline
+    #include <algorithm>   // transform() — used in toLower()
+    using namespace std;
+
+- #include <iostream>   — loads the input/output library. Without this, cout
+                          and cin don't exist.
+- #include <string>     — loads the string type and getline(). Without this
+                          you can't use text variables.
+- #include <algorithm>  — loads transform(), which we use later to convert
+                          text to lowercase.
+- using namespace std;  — lets us write cout instead of the longer std::cout.
+                          It's a shortcut that says "assume everything comes
+                          from the standard library."
+
+
+--------------------------------------------------------------------------------
+Global Variables
+--------------------------------------------------------------------------------
+
+    string g_destination  = "";
+    string g_travel_dates = "";
+    string g_travel_class = "";
+    int    g_nights       = 0;
+    int    g_flight_cost  = 0;
+    string g_hotel        = "";
+    int    g_hotel_cost   = 0;
+    string g_activities   = "";
+
+These are declared OUTSIDE of any function. That's what makes them GLOBAL —
+every function in the entire program can read or change them.
+
+Think of them like a shared notepad. When choice_select_destination() saves
+the user's city, choice_view_summary() can read that city later — because they
+are both looking at the same notepad.
+
+- string variables start as "" (empty text).
+- int variables start as 0.
+- The g_ prefix is just a naming habit to remind you "this is global."
+
+
+--------------------------------------------------------------------------------
+toLower()
+--------------------------------------------------------------------------------
+
+    string toLower(const string& s)
+    {
+        string out = s;
+        transform(out.begin(), out.end(), out.begin(), ::tolower);
+        return out;
+    }
+
+- string toLower(...)     — this function takes in a string and gives back
+                            a string.
+- const string& s         — the & means "don't make a copy, look at the
+                            original directly." The const means "I promise
+                            not to change it." Together they are efficient
+                            and safe.
+- string out = s;         — makes a copy of the original so we can modify it
+                            without touching the caller's variable.
+- transform(...)          — visits every character in out from start
+                            (.begin()) to end (.end()) and replaces each
+                            character with its lowercase version using the
+                            built-in ::tolower function.
+- return out;             — sends the lowercased copy back to whoever called
+                            this function.
+
+WHY DO WE NEED THIS? If a user types "YES", "Yes", or "yes" they all mean the
+same thing. By converting to lowercase first, we only have to check for "yes"
+instead of all three variations.
+
+
+--------------------------------------------------------------------------------
+#include "m5lab1.h"
+--------------------------------------------------------------------------------
+
+    #include "m5lab1.h"
+
+This line is like copy-pasting the entire contents of m5lab1.h right here.
+The compiler will treat it as if you typed all that code here manually.
+
+WHY IS IT IN THE MIDDLE OF THE FILE? Because the functions in m5lab1.h use
+the global variables and toLower(). If this #include were at the very top,
+those wouldn't exist yet when the compiler tried to read them — it reads
+top to bottom.
+
+Double quotes "m5lab1.h" mean "look in the same folder as this file."
+Angle brackets <iostream> mean "look in the system library folders."
+
+
+--------------------------------------------------------------------------------
+main_menu()
+--------------------------------------------------------------------------------
+
+    void main_menu()
+    {
+        while (true)
+        {
+
+- void     — means this function doesn't return any value — it just does work.
+- while(true) — an infinite loop. It runs forever until something inside it
+                says return or break. This keeps the menu on screen after
+                every choice.
+
+    cout << "  1. Destination  : "
+         << (g_destination.empty()  ? "(not set)" : g_destination)  << endl;
+
+This prints the menu item and shows the current value. The part in parentheses
+is called a TERNARY OPERATOR — it's a compact if/else on one line:
+
+    condition ? value_if_true : value_if_false
+
+So g_destination.empty() ? "(not set)" : g_destination means: "if the
+destination string is empty, print (not set), otherwise print the actual
+destination." This gives the user a live status line without opening
+the summary.
+
+    string input;
+    getline(cin, input);
+
+- string input;        — creates an empty text variable to hold what the
+                         user types.
+- getline(cin, input)  — reads everything the user typed up to when they
+                         pressed Enter, and stores it in input. We use
+                         getline instead of cin >> because cin >> stops at
+                         spaces and leaves a newline in the buffer that
+                         causes bugs later.
+
+    int choice = 0;
+    try
+    {
+        choice = stoi(input);
+    }
+    catch (...)
+    {
+        cout << "Please enter a number between 1 and 7." << endl;
+        continue;
+    }
+
+- stoi(input)          — converts text like "3" into the integer 3. But if
+                         the user typed "banana", stoi will THROW AN EXCEPTION
+                         (crash with an error).
+- try { } catch { }    — wraps risky code. If something inside try fails,
+                         instead of crashing the program jumps to catch and
+                         runs that code instead.
+- continue             — jumps back to the top of the while loop, skipping
+                         the rest and showing the menu again.
+
+    switch (choice)
+    {
+        case 1:
+            choice_select_destination();
+            break;
+        ...
+        case 7:
+            return;
+        default:
+            cout << "Please enter a number between 1 and 7." << endl;
+    }
+
+- switch     — like a multi-way if statement. Checks choice once and jumps
+               to the matching case.
+- break      — exits the switch. Without it, execution would "fall through"
+               into the next case.
+- case 7: return; — return exits the entire main_menu() function, which
+               takes us back to main().
+- default:   — runs if none of the cases matched (e.g. user enters 9).
+
+
+--------------------------------------------------------------------------------
+main()
+--------------------------------------------------------------------------------
+
+    int main()
+    {
+
+Every C++ program starts here, always. int means it returns a number to the
+operating system when it finishes.
+
+    while (true)
+    {
+        ...
+        if (response == "yes")      { break;    }
+        else if (response == "no")  { return 0; }
+        else                        { /* ask again */ }
+    }
+
+- The loop keeps asking until the user types exactly "yes" or "no".
+- break    — exits the loop and the program continues to main_menu().
+- return 0 — exits the entire program. The 0 tells the operating system
+             "everything finished successfully." A non-zero number would
+             mean an error occurred.
+
+    main_menu();
+    return 0;
+    }
+
+- main_menu() hands off all the real work. When the user quits from the
+  menu, main_menu() returns here, and then return 0 ends the program.
+
+
+================================================================================
+m5lab1.h — The Story Branches
+================================================================================
+
+
+--------------------------------------------------------------------------------
+The Include Guard
+--------------------------------------------------------------------------------
+
+    #ifndef M5LAB1_H
+    #define M5LAB1_H
+    ...
+    #endif
+
+This is called an INCLUDE GUARD. Here's the problem it solves: if two different
+files both #include "m5lab1.h", the compiler would see all those function
+definitions twice and error out with "function already defined."
+
+- #ifndef M5LAB1_H  — "if M5LAB1_H has NOT been defined yet, include
+                       everything below"
+- #define M5LAB1_H  — defines that name as a flag
+- #endif            — marks the end of the guarded section
+
+The second time the file is included, M5LAB1_H is already defined, so the
+compiler skips the whole thing.
+
+
+--------------------------------------------------------------------------------
+Function Prototypes
+--------------------------------------------------------------------------------
+
+    void choice_select_destination();
+    void choice_destination_details(string dest);
+    void choice_select_dates();
+    void choice_select_travel_class();
+    void choice_upgrade_class();
+    void choice_select_hotel();
+    void choice_add_activities();
+    void choice_view_summary();
+
+A PROTOTYPE is just a one-line announcement: "this function exists, here's
+its name and what it takes/returns." The semicolon at the end is what makes
+it a prototype rather than a definition.
+
+WHY NEEDED? The compiler reads top to bottom. choice_select_destination()
+calls choice_destination_details(), which is defined further down the file.
+Without the prototype, the compiler would see that call and say "I don't know
+what choice_destination_details is." The prototype tells it in advance.
+
+
+--------------------------------------------------------------------------------
+choice_select_destination()
+--------------------------------------------------------------------------------
+
+    const string destinations[5] = {
+        "Oahu, Hawaii",
+        "Cancun, Mexico",
+        ...
+    };
+    const int flightCosts[5] = { 600, 500, 1200, 1400, 300 };
+
+- const              — these arrays cannot be changed — they are read-only data.
+- string destinations[5] — an array that holds 5 text values.
+- int flightCosts[5]     — an array of 5 integers. destinations[0] and
+                           flightCosts[0] belong to the same city — they are
+                           called PARALLEL ARRAYS.
+
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "  " << (i + 1) << ". " << destinations[i] << ...
+    }
+
+- for (int i = 0; i < 5; i++) — a loop that counts i from 0 up to 4
+                                  (5 total steps).
+- i + 1 is printed as the number because arrays start at index 0 but users
+  expect to see 1, 2, 3...
+
+    int idx = stoi(input) - 1;
+    if (idx >= 0 && idx < 5)
+    {
+        g_destination = destinations[idx];
+        g_flight_cost = flightCosts[idx];
+
+- stoi(input) - 1    — converts "1" to 0, "2" to 1, etc., converting the
+                        user's 1-based choice to a 0-based array index.
+- idx >= 0 && idx < 5 — validates the index is in range. && means "and" —
+                        both conditions must be true.
+- Assigning to g_destination and g_flight_cost saves the choice to the
+  shared global notepad.
+
+                choice_destination_details(g_destination);
+                return;
+
+- Calls the sub-branch, passing the destination string as a PARAMETER
+  (an input value).
+- return exits this function and goes back to main_menu().
+
+
+--------------------------------------------------------------------------------
+choice_destination_details(string dest)
+--------------------------------------------------------------------------------
+
+    void choice_destination_details(string dest)
+
+This function receives dest as a PARAMETER — a local copy of whatever was
+passed in. Unlike the globals, this variable only exists inside this function.
+
+    if (dest == "Oahu, Hawaii") { ... }
+    else if (dest == "Cancun, Mexico") { ... }
+    ...
+    else { ... }
+
+A chain of if/else-if checks. The program goes top to bottom until one
+condition matches, runs that block, then skips all the rest. The final else
+catches anything that didn't match above (New York City in this case).
+
+    if (response == "yes")
+    {
+        choice_add_activities();
+    }
+
+This shows BRANCHING FROM INSIDE A BRANCH — one choice function calling
+another. After choice_add_activities() finishes, we come back here, then
+return up to choice_select_destination(), then back to main_menu().
+
+
+--------------------------------------------------------------------------------
+choice_select_dates()
+--------------------------------------------------------------------------------
+
+    if (dates.find('-') != string::npos && dates.length() >= 10)
+
+- dates.find('-')    — searches the string for a - character. Returns its
+                       position if found.
+- string::npos       — a special value meaning "not found." So != string::npos
+                       means "the dash WAS found."
+- dates.length() >= 10 — checks the string is at least 10 characters long
+                          (minimum for a date).
+- Both conditions joined by && must be true — the string needs a dash AND
+  be long enough.
+
+    if (nights > 0 && nights <= 90)
+    {
+        g_nights = nights;
+        return;
+    }
+
+Validates the number is reasonable (1-90 nights), saves it to the global,
+and return exits the function.
+
+
+--------------------------------------------------------------------------------
+choice_select_travel_class()
+--------------------------------------------------------------------------------
+
+    else if (input == "2")
+    {
+        g_travel_class = "Business";
+        g_flight_cost  = g_flight_cost * 2;
+
+g_flight_cost = g_flight_cost * 2 takes the current value, doubles it, and
+saves it back. So if the flight was $600, it becomes $1200. This works because
+g_flight_cost was already set when the user picked their destination.
+
+
+--------------------------------------------------------------------------------
+choice_upgrade_class()
+--------------------------------------------------------------------------------
+
+This is a SUB-BRANCH — only reachable from inside choice_select_travel_class(),
+not from the main menu. It demonstrates that functions can call other functions
+freely.
+
+    if (response == "yes")
+    {
+        g_travel_class = "Business";
+        g_flight_cost  = g_flight_cost * 2;
+
+If the user upgrades, we overwrite the "Economy" value that was set a moment
+ago and apply the multiplier. Global variables can be changed as many times
+as needed.
+
+
+--------------------------------------------------------------------------------
+choice_select_hotel()
+--------------------------------------------------------------------------------
+
+    if (input == "1" || input == "2" || input == "3")
+    {
+        int idx      = stoi(input) - 1;
+        g_hotel      = hotelNames[idx];
+        g_hotel_cost = hotelRates[idx];
+
+- || means "or" — any of the three valid choices will pass.
+- Both the name and the per-night rate are saved to globals. The total isn't
+  calculated here — that's the summary's job.
+
+
+--------------------------------------------------------------------------------
+choice_add_activities()
+--------------------------------------------------------------------------------
+
+    g_activities = "";
+    int count = 0;
+
+Before collecting new activities, we reset g_activities to empty. This way
+if the user visits this option twice, they get a fresh list instead of
+duplicates being appended to the old one.
+
+    if (!g_activities.empty())
+    {
+        g_activities += ", ";
+    }
+    g_activities += activity;
+
+- += appends text to the end of the existing string.
+- The if check prevents a leading comma on the very first item. After
+  "Snorkeling" is added, the next item will be ", Sunset cruise" giving
+  "Snorkeling, Sunset cruise".
+
+    cout << "✔ " << count << " activit" << (count == 1 ? "y" : "ies") << " saved." << endl;
+
+Another ternary — if count is exactly 1, print "activity". Otherwise print
+"activities". This gives grammatically correct output like "1 activity saved"
+vs "2 activities saved."
+
+
+--------------------------------------------------------------------------------
+choice_view_summary()
+--------------------------------------------------------------------------------
+
+    bool missingInfo = false;
+
+    if (g_destination.empty())
+    {
+        cout << "  ⚠  Destination: (not selected...)" << endl;
+        missingInfo = true;
+    }
+
+bool is a variable that can only be true or false. We start it as false
+(nothing is missing), and flip it to true if we find any empty required fields.
+This lets us show the total cost only when everything has been filled in.
+
+    int hotelTotal = (g_nights > 0) ? g_hotel_cost * g_nights : 0;
+
+Another ternary — if nights is greater than 0, multiply rate x nights.
+Otherwise use 0 to avoid a weird result if nights was never set.
+
+    if (grandTotal > 3000)
+    {
+        cout << "\n★  LUXURY TRIP UNLOCKED  ★" << endl;
+        ...
+    }
+    else
+    {
+        cout << "\n✈  SMART TRAVELER AWARD  ✈" << endl;
+        ...
+    }
+
+This is the TWO-ENDING SYSTEM. The same code path always runs — but which
+cout lines actually print depends entirely on the number the user built up
+through their choices. Every choice the user made (destination, class, hotel)
+affected g_flight_cost and g_hotel_cost, which add up to grandTotal here.
+
+
+================================================================================
+SUMMARY OF BIG IDEAS
+================================================================================
+
+Concept              | Where you see it
+---------------------|------------------------------------------------------------
+Global variables     | g_destination, g_nights, etc. in m5lab1.cpp —
+                     | shared across all functions
+---------------------|------------------------------------------------------------
+Function prototypes  | The 8 one-liners at the top of m5lab1.h —
+                     | tell the compiler what exists
+---------------------|------------------------------------------------------------
+Parameters           | choice_destination_details(string dest) —
+                     | data passed into a function
+---------------------|------------------------------------------------------------
+Return values        | toLower() returns a string; main() returns 0
+---------------------|------------------------------------------------------------
+while(true) loops    | Every input section — keeps asking until
+                     | valid input is received
+---------------------|------------------------------------------------------------
+try/catch            | Around stoi() calls — handles non-number input
+                     | without crashing
+---------------------|------------------------------------------------------------
+Ternary operator     | condition ? a : b — compact if/else for simple choices
+---------------------|------------------------------------------------------------
+Parallel arrays      | destinations[i] and flightCosts[i] —
+                     | same index, related data
+---------------------|------------------------------------------------------------
+Sub-branches         | choice_upgrade_class() called from inside
+                     | another branch function
+================================================================================
