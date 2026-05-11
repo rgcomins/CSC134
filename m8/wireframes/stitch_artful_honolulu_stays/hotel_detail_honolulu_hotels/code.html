@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aloha Escapes - Premium Honolulu Resort</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#e6e3d0",
+                      "inverse-primary": "#8bd1e8",
+                      "on-primary-fixed": "#001f27",
+                      "surface-container-high": "#ece9d6",
+                      "tertiary-container": "#136066",
+                      "on-background": "#1c1c11",
+                      "secondary-fixed": "#ffdbc9",
+                      "primary-fixed": "#b2ebff",
+                      "error": "#ba1a1a",
+                      "surface-dim": "#dddbc8",
+                      "on-error-container": "#93000a",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#763300",
+                      "on-primary-container": "#91d7ee",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#004f54",
+                      "tertiary": "#00474c",
+                      "on-surface-variant": "#3f484c",
+                      "primary": "#004655",
+                      "background": "#fdfae7",
+                      "inverse-on-surface": "#f4f1de",
+                      "surface-container-low": "#f7f4e1",
+                      "secondary": "#9b4500",
+                      "surface-tint": "#13677b",
+                      "surface-bright": "#fdfae7",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#004e5f",
+                      "on-tertiary-container": "#95d8df",
+                      "on-secondary-fixed": "#331200",
+                      "outline": "#6f797c",
+                      "inverse-surface": "#313124",
+                      "tertiary-fixed-dim": "#8fd2d8",
+                      "secondary-container": "#fc8a40",
+                      "tertiary-fixed": "#abeef5",
+                      "surface-container-highest": "#e6e3d0",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#672c00",
+                      "primary-fixed-dim": "#8bd1e8",
+                      "on-surface": "#1c1c11",
+                      "secondary-fixed-dim": "#ffb68d",
+                      "surface-container": "#f1eedb",
+                      "on-tertiary-fixed": "#002022",
+                      "surface": "#fdfae7",
+                      "primary-container": "#005f73",
+                      "outline-variant": "#bfc8cc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "section-gap-lg": "120px",
+                      "section-gap-sm": "64px",
+                      "container-max": "1280px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "label-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle pattern overlay for background */
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23136066' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background bg-pattern antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto bg-surface/70 backdrop-blur-xl shadow-sm text-primary">
+<div class="flex items-center gap-gutter">
+<a class="font-display-lg text-headline-md tracking-tight text-primary" href="#">ALOHA ESCAPES</a>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-secondary border-b-2 border-secondary pb-1 font-label-lg text-label-lg hover:bg-surface-variant/20 rounded-lg transition-all px-3 py-2" href="#">Destinations</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg hover:bg-surface-variant/20 rounded-lg px-3 py-2" href="#">Experiences</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg hover:bg-surface-variant/20 rounded-lg px-3 py-2" href="#">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg hover:bg-surface-variant/20 rounded-lg px-3 py-2" href="#">Our Spirit</a>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="md:hidden flex items-center justify-center p-2 text-primary hover:bg-surface-variant/20 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<button class="hidden md:flex bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-label-lg text-label-lg hover:scale-105 transition-transform shadow-sm">
+                Book Now
+            </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-[100px] pb-section-gap-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-4">
+<a class="hover:text-primary transition-colors" href="#">Destinations</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Oahu</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-semibold">The Royal Kahala</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2">The Royal Kahala Resort</h1>
+<div class="flex items-center gap-4 text-on-surface-variant font-body-md text-body-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="location_on" data-weight="fill">location_on</span>
+<span>Honolulu, Hawaii</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[20px] text-secondary" data-icon="star" data-weight="fill">star</span>
+<span>4.9 (128 reviews)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Gallery -->
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 mb-section-gap-sm h-[614px] min-h-[500px]">
+<div class="md:col-span-2 md:row-span-2 rounded-xl overflow-hidden relative group shadow-sm">
+<img alt="Resort Pool View" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A luxurious, expansive infinity pool at a premium Honolulu resort overlooking the vibrant blue Pacific Ocean. Lush, organic green palm trees frame the scene against a bright, clear blue sky. White sun loungers with soft beige umbrellas dot the pool deck, adhering to a sophisticated Sandy Neutral and deep Ocean Blue color palette. The lighting is bright and inviting, typical of a warm Hawaiian afternoon, creating an immersive and tranquil vacation mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvdcnsKnvyCvbdOEJMBtGSLlQt5J0Mc4_9t8VvGG0Eipy9pOSA8SOew05PnmeV9q757YyoIyYPdmryDyUi9JRirepSL017xp_zgC0yZmjOhhy9DsdGCJ_EbWNaNAMa_h-1sz9lOx7YO_B4dbmAPw6F3yx6pvQOwz98X3l2I5SKkLA3tWqk7pr0rcbwHxRKbZpXylLSgdwC6jl3N4EfKEe2GD05xJKCsb9MaPGVcQ8Oe3ODkMazitWTnMAFLIxBkIelNPGwn8C5GR1j"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+<span class="text-on-primary font-label-lg text-label-lg bg-surface/20 backdrop-blur-md px-4 py-2 rounded-full border border-surface/30">Infinity Pool</span>
+</div>
+</div>
+<div class="hidden md:block col-span-1 row-span-1 rounded-xl overflow-hidden relative group shadow-sm">
+<img alt="Ocean View Room" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An elegant, modern resort hotel room interior with large floor-to-ceiling windows showcasing a stunning view of the Hawaiian coast. The room features a plush king-sized bed with crisp white linens and sandy neutral accents. Soft, natural sunlight floods the space, highlighting organic minimalism in the decor, such as a potted tropical plant and woven texture chairs. The mood is calm, premium, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsVfbpMmsy-V3NjrE8LZVkyg4_RrH54h2SNHhxHBfN3qpLWYnIdP1vPOSkaxrViVrOkCE4pUbjIzjrM0vcTeSbH7iWpbZmRZdfUK9yg4KtXTGex4W7VnXc5n98oDrRjm8cHMe5Jc-On5y7Ql8iSlVieBvryzfmyeD4vvb6mwbwU9LVHpzgWTyveE6cCER_fJe0uNO7f0y0fC36c5ChD30yAoVVygYzP_smQBlpRKXsnEi4np4S1vUcsP232TprC32oeO6-NNQ8MOw5"/>
+</div>
+<div class="hidden md:block col-span-1 row-span-1 rounded-xl overflow-hidden relative group shadow-sm">
+<img alt="Spa Area" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A serene, high-end spa treatment room within a tropical resort. The design embraces organic minimalism with light wood tones, soft white towels, and subtle Palm Green botanical accents. A large window looks out onto a secluded, lush private garden. The lighting is soft, warm, and diffused, creating a deeply relaxing and restorative atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD99w4j4YN5arMsS5WSi6cQYrsRzjM_RTDNasmtC4NdkPiX5K8MZvxZkqMsiXDfRN29r_wu-HIg147f_N-dMgethUsSc3rgsuJbk-EObeHcLB_y5yifSO0XYF5pqv0II4AeYjWvQZ0kfGKjzY0H-y59P3xltTtUW0aUlWJH72RLnmWRNHJZTdvyWhlu3bsVEC02H0DCrsts4uBlw455bnaj54snPx2Z72mU-PfQ-b8zyYzGGHNwQnxMLmYJVYvMZvAWMCR267mijFAX"/>
+</div>
+<div class="hidden md:block col-span-2 row-span-1 rounded-xl overflow-hidden relative group shadow-sm">
+<img alt="Resort Dining" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An upscale, open-air resort restaurant situated right on the beach at sunset. The sky is painted in soft Sunset Orange and deep Ocean Blue hues. Elegant tables are set with fine dining ware, surrounded by ambient tiki torch lighting and string lights reflecting off Glassmorphic architectural elements. The mood is romantic, premium, and intimately connected to the Hawaiian landscape." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyHoy5bBWvppg7REzHV0oYt5LrokC-sgxfKfkfthrAa6x4u7D6fpsl1VYLF7qjm7KOPUKGBK4jATN8Z9c9x8CxweXWSi0C5WajqtoS9Zyv_rW6Q0KSMsQXlW6pB29aJs1xsewEKSRfU4TiTvgTYi2g90C7v8DMIIBtBfKp4fkXSQhSu2eNjgvpH3dOxBwy6JvzoeqSFkFGQAjl4HVDEudpUkJNQ4YV3mP00OB0QpqTP0fLL2XjTabpLQmZgs0VhlY0hwzkzVtiObrk"/>
+<button class="absolute bottom-4 right-4 bg-surface/80 backdrop-blur-md text-primary px-4 py-2 rounded-lg font-label-lg text-label-lg flex items-center gap-2 hover:bg-surface transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="photo_library">photo_library</span>
+                    View All Photos
+                </button>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Content -->
+<div class="lg:col-span-8 space-y-section-gap-sm">
+<!-- About Section -->
+<section>
+<div class="flex items-center gap-4 mb-6">
+<h2 class="font-headline-lg text-headline-md text-primary">About this sanctuary</h2>
+<div class="h-[1px] flex-1 bg-outline-variant/30"></div>
+</div>
+<div class="prose prose-lg text-on-surface-variant font-body-lg text-body-lg">
+<p class="mb-4">Nestled on the pristine shores of Oahu, The Royal Kahala offers an escape that honors the deeply rooted traditions of the Hawaiian Islands while providing unparalleled modern luxury. Designed with an ethos of organic minimalism, every space breathes with the rhythm of the surrounding ocean.</p>
+<p>Awake to the sound of gentle waves in our meticulously curated oceanfront suites, where glassmorphic accents allow the lush botanical surroundings to become part of your interior landscape. Whether indulging in our world-class, sustainably sourced dining or finding peace in our holistic spa, your journey here is one of true tropical warmth and premium tranquility.</p>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-3 mt-8">
+<span class="bg-tertiary-container/10 text-on-primary-fixed font-label-sm text-label-sm px-4 py-2 rounded-full border border-tertiary-container/20">Oceanfront Property</span>
+<span class="bg-primary-container/10 text-on-primary-fixed font-label-sm text-label-sm px-4 py-2 rounded-full border border-primary-container/20">Sustainable Luxury</span>
+<span class="bg-secondary-container/10 text-on-secondary-fixed font-label-sm text-label-sm px-4 py-2 rounded-full border border-secondary-container/20">Adults Recommended</span>
+</div>
+</section>
+<!-- Amenities Section -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<h2 class="font-headline-lg text-headline-md text-primary">Resort Amenities</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="pool">pool</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Infinity Pools</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="spa">spa</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Holistic Spa</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">3 Signature Dining</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Fitness Center</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="wifi">wifi</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Premium Wi-Fi</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="local_parking">local_parking</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Valet Parking</span>
+</div>
+</div>
+</section>
+<!-- Map Placeholder -->
+<section>
+<div class="w-full h-[300px] rounded-xl bg-surface-variant relative overflow-hidden shadow-sm flex items-center justify-center">
+<img alt="Map Location" class="w-full h-full object-cover opacity-80" data-alt="A highly stylized, minimal map view of the Honolulu coastline near Diamond Head. The map uses a soft, light-mode palette adhering to the Sandy Neutral and Palm Green brand colors. Key resort locations are marked with elegant, subtle pins. The overall aesthetic is clean, premium, and fits perfectly within an organic glassmorphic UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApYhZDCvznNGm_6-mQ_NV5CBtSY66dK5Y5wDM9DDGJ98aGOvJtBpX8GvVrn8lzYKq7-yUWqunkdkRR3L3S1kB7yDiHVpsPoP_MAdP-u0mandBAYaiQIM27VlgeWyRO9nFMj945f-ANWge28VojyPmImhBapyDEnOkmk6GD3ET4xyuYbLn19F5yGYthPcBwCTK4PaMocazCGe0-SgwBkevaeeZpDdKz-6F2fICLc-yuc4fuLbowQ5WLD1lulqJmTScBYOqCbck8hf56"/>
+<div class="absolute inset-0 bg-primary/10"></div>
+<button class="absolute bg-surface text-primary px-6 py-3 rounded-full font-label-lg text-label-lg flex items-center gap-2 shadow-sm hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+                             View Interactive Map
+                         </button>
+</div>
+</section>
+</div>
+<!-- Right Column: Booking Widget -->
+<div class="lg:col-span-4 relative">
+<!-- Sticky Container -->
+<div class="sticky top-[100px] bg-surface/80 backdrop-blur-2xl rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,95,115,0.08)] border border-surface-variant">
+<div class="flex justify-between items-baseline mb-6">
+<div>
+<span class="font-display-lg text-headline-md text-primary">$850</span>
+<span class="font-body-md text-body-md text-on-surface-variant"> / night</span>
+</div>
+</div>
+<!-- Booking Form -->
+<div class="space-y-4 mb-6">
+<!-- Dates -->
+<div class="grid grid-cols-2 gap-2">
+<div class="relative">
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1 ml-1">Check-in</label>
+<div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2" data-icon="calendar_today">calendar_today</span>
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full font-body-md text-body-md text-primary outline-none" placeholder="Oct 12" type="text"/>
+</div>
+</div>
+<div class="relative">
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1 ml-1">Check-out</label>
+<div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2" data-icon="calendar_today">calendar_today</span>
+<input class="bg-transparent border-none p-0 focus:ring-0 w-full font-body-md text-body-md text-primary outline-none" placeholder="Oct 18" type="text"/>
+</div>
+</div>
+</div>
+<!-- Guests -->
+<div class="relative">
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1 ml-1">Guests</label>
+<div class="flex items-center justify-between bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 cursor-pointer hover:border-primary transition-all">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2" data-icon="person">person</span>
+<span class="font-body-md text-body-md text-primary">2 Adults, 0 Children</span>
+</div>
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Total Breakdown -->
+<div class="space-y-2 mb-6 font-body-md text-body-md text-on-surface-variant">
+<div class="flex justify-between">
+<span>$850 x 6 nights</span>
+<span>$5,100</span>
+</div>
+<div class="flex justify-between">
+<span class="underline decoration-dotted cursor-help">Resort fee</span>
+<span>$300</span>
+</div>
+<div class="flex justify-between">
+<span class="underline decoration-dotted cursor-help">Taxes</span>
+<span>$450</span>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/30 my-3"></div>
+<div class="flex justify-between font-label-lg text-label-lg text-primary">
+<span>Total</span>
+<span>$5,850</span>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary py-4 rounded-xl font-label-lg text-label-lg hover:scale-[1.02] transition-transform shadow-sm flex justify-center items-center gap-2">
+                        Reserve Your Stay
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-3">You won't be charged yet</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap-sm px-margin-mobile md:px-margin-desktop border-t border-outline-variant/30 bg-surface-container-lowest text-tertiary">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="font-display-lg text-headline-sm text-primary">ALOHA ESCAPES</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-body-md text-body-md" href="#">Heritage Stories</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-body-md text-body-md" href="#">Local Guides</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-body-md text-body-md" href="#">Sustainability</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-body-md text-body-md" href="#">Contact Us</a>
+</div>
+<div class="text-center md:text-right">
+<p class="font-body-md text-body-md text-tertiary">© 2024 Aloha Escapes. Honoring the traditions of the Hawaiian Islands.</p>
+</div>
+</div>
+</footer>
+</body></html>

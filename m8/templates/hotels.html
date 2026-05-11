@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Hotels — Honolulu Hotels{% endblock %}
+
+{% block body %}
+<main class="container section">
+    <a class="back-link" href="{{ url_for('home_page') }}">&larr; Home</a>
+
+    <header style="margin-bottom: 48px; max-width: 720px;">
+        <p class="caption" style="margin-bottom: 8px;">Curated for this trip</p>
+        <h1 class="display-l">Five places to stay in Honolulu.</h1>
+        <p style="color: var(--driftwood);">A small, hand-picked set of Waikiki properties. Pick one to see its rooms and plan your trip.</p>
+    </header>
+
+    <section class="hotel-grid">
+        {% for hotel in hotels %}
+        <a class="card card-link hotel-card" href="{{ url_for('rooms', hotel_slug=hotel.slug) }}">
+            <div class="card-image">
+                <img src="{{ url_for('static', filename=hotel.hero_image) }}" alt="{{ hotel.name }}">
+            </div>
+            <div class="card-body">
+                <h3 class="display-m">{{ hotel.name }}</h3>
+                <p class="tagline">{{ hotel.tagline }}</p>
+                <div class="meta">
+                    <span>{{ hotel.location }}</span>
+                    <span class="price">from <strong>${{ "{:,}".format(hotel.starting_price) }}</strong>/night</span>
+                </div>
+                <div class="cta-row">Choose this hotel &rarr;</div>
+            </div>
+        </a>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

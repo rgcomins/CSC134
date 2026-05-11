@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ hotelname }} — Welcome</title>
-</head>
-<body style="background-image: url('{{ url_for('static', filename='rainbow_map.jpg') }}');
-             background-size: cover;
-             background-repeat: no-repeat;
-             min-height: 100vh;
-             margin: 0;
-             font-family: Arial, sans-serif;">
-    <nav style="padding: 20px;">
-        <h2 style="margin: 0;">
-            <a style="color: lime; text-decoration: none;" href="{{ url_for('rooms') }}">Rooms</a>
-        </h2>
-    </nav>
+{% extends "base.html" %}
+{% block title %}Honolulu Hotels — Find your stay{% endblock %}
 
-    <div style="padding: 80px 40px;">
-        <h1 style="color: white; text-shadow: 2px 2px 6px rgba(0,0,0,0.6);">
-            Welcome to {{ hotelname }} — your dream vacation starts here.
-        </h1>
+{% block body %}
+<section class="hero">
+    <div class="hero-image" style="background-image: url('{{ url_for('static', filename='rainbow_map.jpg') }}');"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-content container">
+        <p class="caption" style="color: var(--paper); opacity: 0.85; margin-bottom: 12px;">Honolulu · Hawaii</p>
+        <h1 class="display-xl">Find your stay in Honolulu.</h1>
+        <p>Five iconic Waikiki hotels, one quiet booking experience. Pick a property, plan the trip, see the cost.</p>
+        <div style="margin-top: 32px;">
+            <a class="btn btn-primary" href="{{ url_for('hotels_menu') }}">Browse hotels &rarr;</a>
+        </div>
     </div>
-</body>
-</html>
+</section>
+{% endblock %}

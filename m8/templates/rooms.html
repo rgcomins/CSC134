@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}{{ hotel.name }} — Rooms & Booking{% endblock %}
+
+{% block body %}
+<section class="banner">
+    <div class="banner-image" style="background-image: url('{{ url_for('static', filename=hotel.hero_image) }}');"></div>
+    <div class="banner-scrim"></div>
+    <div class="banner-content container">
+        <p class="caption">{{ hotel.location }}</p>
+        <h1 class="display-l">{{ hotel.name }}</h1>
+    </div>
+</section>
+
+<main class="container section">
+    <a class="back-link" href="{{ url_for('hotels_menu') }}">&larr; All hotels</a>
+
+    <div class="rooms-layout">
+        <div class="rooms-column">
+            <header class="section-title">
+                <span class="caption">Rooms</span>
+                <h2 class="display-m">Pick your room.</h2>
+            </header>
+
+            <div class="room-list">
+                {% for name, info in hotel.rooms.items() %}
+                <article class="room-row">
+                    <div class="room-image">
+                        <img src="{{ url_for('static', filename=info.image) }}" alt="{{ name }} room at {{ hotel.name }}">
+                    </div>
+                    <div class="room-body">
+                        <h3 class="display-m">{{ name }}</h3>
+                        <div class="price tabular">${{ "{:,}".format(info.price) }} <span class="price-suffix">/ night</span></div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <aside class="booking-form-wrap">
+            <form class="booking-form" action="{{ url_for('trip_summary') }}" method="POST">
+                <input type="hidden" name="hotel_slug" value="{{ hotel_slug }}">
+
+                <h2 class="display-m">Plan your trip</h2>
+                <p style="color: var(--driftwood); margin-top: 0; margin-bottom: 24px; font-size: 15px;">Fill in your details to see an itemized cost summary.</p>
+
+                <div class="field-group">
+                    <h3>Your trip</h3>
+
+                    <label for="name">Full name</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="dates">Start date</label>
+                    <input type="date" id="dates" name="dates" required>
+
+                    <label for="num_nights">Number of nights</label>
+                    <input type="number" id="num_nights" name="num_nights" min="1" value="3" required>
+
+                    <label for="ticketPrice">Airfare per traveler (USD)</label>
+                    <input type="number" id="ticketPrice" name="ticketPrice" min="0" placeholder="500" required>
+
+                    <label for="Rooms">Room</label>
+                    <select id="Rooms" name="Rooms" required>
+                        {% for name, info in hotel.rooms.items() %}
+                        <option value="{{ name }}|{{ info.price }}">{{ name }} — ${{ "{:,}".format(info.price) }}/night</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <h3>Add activities</h3>
+                    <div class="checkbox-list">
+                        {% for key, label, price in activities %}
+                        <label>
+                            <input type="checkbox" name="activity" value="{{ key }}|{{ price }}">
+                            <span>{{ label }} — ${{ price }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <h3>Travel style</h3>
+                    <div class="radio-row">
+                        <label><input type="radio" name="style" value="luxury"> Luxury</label>
+                        <label><input type="radio" name="style" value="budget"> Budget</label>
+                        <label><input type="radio" name="style" value="adventure"> Adventure</label>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <h3>Notes</h3>
+                    <label for="comments">Anything we should know?</label>
+                    <textarea id="comments" name="comments" rows="3" maxlength="500" placeholder="Anniversary trip, dietary preferences, etc."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">See trip summary &rarr;</button>
+                    <button class="btn-link" type="reset">Clear form</button>
+                </div>
+            </form>
+        </aside>
+    </div>
+</main>
+{% endblock %}

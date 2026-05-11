@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Hotel not found — Honolulu Hotels{% endblock %}
+
+{% block body %}
+<main class="container">
+    <div class="not-found">
+        <h1 class="display-l">We couldn't find that hotel.</h1>
+        <p>The hotel you were looking for isn't in our curated set.</p>
+        <a class="btn btn-primary" href="{{ url_for('hotels_menu') }}">&larr; Back to all hotels</a>
+    </div>
+</main>
+{% endblock %}
