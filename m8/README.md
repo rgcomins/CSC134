@@ -29,18 +29,32 @@ No build step. No database. No JavaScript framework. Everything runs server-side
 
 ## Running it locally
 
-From inside the `m8/` directory:
+Two convenience scripts live in this directory.
+
+**First time only** — install Flask:
 
 ```bash
-python app.py
+./setup.sh
 ```
 
-The dev server starts on **http://127.0.0.1:5000/**. Debug mode is on, so edits to templates or `app.py` reload automatically.
-
-If Flask isn't installed yet:
+**Every time you want to run the app**:
 
 ```bash
-pip install flask
+./run.sh
+```
+
+The dev server starts on **http://127.0.0.1:5000/**. Debug mode is on, so edits to templates or `app.py` reload automatically. Stop the server with `Ctrl+C`.
+
+### What the scripts actually do
+
+- `setup.sh` runs `pip install flask`. Re-running it is harmless.
+- `run.sh` cd's into the `m8/` directory (so you can invoke it from anywhere) and runs `python3 app.py`.
+
+If you'd rather skip the scripts, the equivalent manual commands are:
+
+```bash
+pip install flask        # once
+python3 app.py           # each time
 ```
 
 ---
@@ -63,6 +77,8 @@ Valid hotel slugs: `hale-koa`, `hilton-hawaiian-village`, `royal-hawaiian`, `moa
 ```
 m8/
 ├── app.py                   # Flask routes + HOTELS data + cost math
+├── setup.sh                 # one-time: install Flask
+├── run.sh                   # start the dev server
 ├── README.md                # this file
 ├── PRD.md                   # product requirements
 ├── design_doc.md            # code-side design (data + functions + flow)
