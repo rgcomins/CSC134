@@ -1,0 +1,26 @@
+{# =====================================================================
+   _footer.html — quiet centered footer, included on every page.
+
+   The wireframe footer is just a brand re-statement, a row of "soft"
+   links, and a copyright line.  We mirror that exactly.  The links
+   are placeholders since the corresponding pages don't exist yet.
+   ===================================================================== #}
+<footer class="w-full py-section-gap-sm px-margin-mobile md:px-margin-desktop border-t border-outline-variant/30 bg-surface-container-lowest flex flex-col items-center mt-section-gap-sm">
+
+    {# Brand mark, smaller and quieter than in the nav. #}
+    <div class="font-display text-headline-md text-primary mb-8 tracking-tight uppercase">
+        {{ brand|default("Aloha Escapes") }}
+    </div>
+
+    {# Soft link row.  Hover lifts each link toward the Sunset Orange. #}
+    <div class="flex flex-wrap justify-center gap-6 mb-8">
+        <a href="#" class="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300">Heritage Stories</a>
+        <a href="#" class="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300">Local Guides</a>
+        <a href="#" class="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300">Sustainability</a>
+        <a href="#" class="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300">Contact Us</a>
+    </div>
+
+    <p class="font-body text-body-md text-tertiary text-center">
+        © 2026 {{ brand|default("Aloha Escapes") }}. Honoring the traditions of the Hawaiian Islands.
+    </p>
+</footer>

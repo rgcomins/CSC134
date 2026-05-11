@@ -1,90 +1,142 @@
 {% extends "base.html" %}
-{% block title %}Trip Summary — {{ hotel_name }}{% endblock %}
+
+{# =====================================================================
+   trip_summary.html — post-submit cost summary.
+
+   The wireframes don't include a trip-summary page (their booking
+   widget is a stub), so this page applies the design language to
+   our existing summary structure:
+     - Breadcrumb back to /hotels
+     - Editorial Playfair Display greeting ("Here's your trip, …")
+     - Hero card: room image on the left, hotel name + room name +
+       Sunset Orange nightly price on the right
+     - Two-column trip details + cost breakdown
+     - Text-link footer actions
+   ===================================================================== #}
+
+{% block title %}Trip Summary — {{ hotel_name }} — {{ brand }}{% endblock %}
 
 {% block body %}
-<main class="container section">
-    <a class="back-link" href="{{ url_for('hotels_menu') }}">&larr; All hotels</a>
+<main class="pt-[100px] pb-section-gap-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 
-    <header style="margin-bottom: 32px; max-width: 720px;">
-        <p class="caption" style="margin-bottom: 8px;">Trip summary</p>
-        <h1 class="display-l">Here's your trip, {{ traveler_name }}.</h1>
+    {# ---------- Breadcrumb ---------- #}
+    <div class="flex items-center gap-2 text-on-surface-variant font-body text-label-sm mb-6">
+        <a class="hover:text-primary transition-colors" href="{{ url_for('home_page') }}">Home</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{{ url_for('hotels_menu') }}">Destinations</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <span class="text-primary font-semibold">Trip summary</span>
+    </div>
+
+    {# ---------- Header ---------- #}
+    <header class="mb-8 max-w-3xl">
+        <p class="font-body text-label-lg uppercase text-secondary mb-3 tracking-wider">Trip summary</p>
+        <h1 class="font-display text-display-lg-mobile md:text-headline-lg text-primary">
+            Here's your trip, {{ traveler_name }}.
+        </h1>
     </header>
 
-    <section class="summary-hero" aria-label="Selected room">
-        <div class="room-image">
-            <img src="{{ url_for('static', filename=room_image) }}" alt="{{ type }} room at {{ hotel_name }}">
+    {# ---------- Hero card: image + hotel + room + Sunset Orange price ---------- #}
+    <section class="grid grid-cols-1 md:grid-cols-2 bg-surface-container-lowest rounded-3xl overflow-hidden shadow-ambient mb-section-gap-sm">
+
+        <div class="aspect-[4/3] md:aspect-auto overflow-hidden">
+            <img alt="{{ type }} at {{ hotel_name }}"
+                 src="{{ url_for('static', filename=room_image) }}"
+                 class="w-full h-full object-cover">
         </div>
-        <div class="summary-meta">
-            <p class="caption" style="margin-bottom: 6px;">{{ hotel_location }}</p>
-            <h2 class="hotel-name display-l">{{ hotel_name }}</h2>
-            <p class="room-name">{{ type }}</p>
-            <div class="nightly-price tabular">
-                ${{ "{:,.2f}".format(cost) }}<small>/ night</small>
+
+        <div class="p-10 flex flex-col justify-center">
+            <span class="font-body text-label-lg uppercase text-secondary tracking-wider mb-2">{{ hotel_location }}</span>
+            <h2 class="font-display text-headline-md text-primary mb-1 leading-tight">{{ hotel_name }}</h2>
+            <p class="font-body text-body-lg text-on-surface-variant mb-6">{{ type }}</p>
+            <div class="flex items-baseline gap-2">
+                <span class="font-display text-display-lg-mobile text-[#FF8C42] tabular leading-none">
+                    ${{ "{:,.2f}".format(cost) }}
+                </span>
+                <span class="font-body text-body-md text-on-surface-variant">/ night</span>
             </div>
+            <p class="font-body text-body-md text-on-surface-variant mt-4">
+                <span class="material-symbols-outlined text-[18px] text-tertiary align-middle mr-1">calendar_today</span>
+                {{ num_nights }} night{{ '' if num_nights == 1 else 's' }} · {{ dates }}
+            </p>
         </div>
+
     </section>
 
-    <section class="summary-grid">
+    {# ---------- Trip details + cost breakdown ---------- #}
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap-sm">
+
+        {# --- Trip details column --- #}
         <div>
-            <h3 class="caption" style="margin-bottom: 16px;">Trip details</h3>
-            <ul class="detail-list">
-                <li>
-                    <span class="label">Traveler</span>
-                    <span class="value">{{ traveler_name }}</span>
+            <h3 class="font-body text-label-lg uppercase text-secondary tracking-wider mb-4">Trip details</h3>
+            <ul class="space-y-0">
+                <li class="flex justify-between py-3 border-b border-outline-variant/30">
+                    <span class="font-body text-body-md text-on-surface-variant">Traveler</span>
+                    <span class="font-body text-body-md text-primary">{{ traveler_name }}</span>
                 </li>
-                <li>
-                    <span class="label">Dates</span>
-                    <span class="value">{{ dates }}</span>
+                <li class="flex justify-between py-3 border-b border-outline-variant/30">
+                    <span class="font-body text-body-md text-on-surface-variant">Dates</span>
+                    <span class="font-body text-body-md text-primary tabular">{{ dates }}</span>
                 </li>
-                <li>
-                    <span class="label">Nights</span>
-                    <span class="value">{{ num_nights }}</span>
+                <li class="flex justify-between py-3 border-b border-outline-variant/30">
+                    <span class="font-body text-body-md text-on-surface-variant">Nights</span>
+                    <span class="font-body text-body-md text-primary tabular">{{ num_nights }}</span>
                 </li>
-                <li>
-                    <span class="label">Room</span>
-                    <span class="value">{{ type }}</span>
+                <li class="flex justify-between py-3 border-b border-outline-variant/30">
+                    <span class="font-body text-body-md text-on-surface-variant">Room</span>
+                    <span class="font-body text-body-md text-primary">{{ type }}</span>
                 </li>
-                <li>
-                    <span class="label">Activities</span>
-                    <span class="value">{{ activity }}</span>
+                <li class="flex justify-between py-3">
+                    <span class="font-body text-body-md text-on-surface-variant">Activities</span>
+                    <span class="font-body text-body-md text-primary capitalize text-right">{{ activity }}</span>
                 </li>
             </ul>
         </div>
 
+        {# --- Cost breakdown column --- #}
         <div>
-            <h3 class="caption" style="margin-bottom: 16px;">Cost breakdown</h3>
-            <ul class="cost-table">
-                <li>
-                    <span class="label">Stay ({{ num_nights }} × ${{ "{:,.2f}".format(cost) }})</span>
-                    <span class="value">${{ "{:,.2f}".format(cost_of_stay) }}</span>
+            <h3 class="font-body text-label-lg uppercase text-secondary tracking-wider mb-4">Cost breakdown</h3>
+            <ul class="space-y-0 tabular">
+                <li class="flex justify-between py-3 text-on-surface-variant">
+                    <span class="font-body text-body-md">Stay ({{ num_nights }} × ${{ "{:,.2f}".format(cost) }})</span>
+                    <span class="font-body text-body-md text-on-surface">${{ "{:,.2f}".format(cost_of_stay) }}</span>
                 </li>
-                <li>
-                    <span class="label">Airfare</span>
-                    <span class="value">${{ "{:,.2f}".format(ticket_price) }}</span>
+                <li class="flex justify-between py-3 text-on-surface-variant">
+                    <span class="font-body text-body-md">Airfare</span>
+                    <span class="font-body text-body-md text-on-surface">${{ "{:,.2f}".format(ticket_price) }}</span>
                 </li>
-                <li>
-                    <span class="label">Activities</span>
-                    <span class="value">${{ "{:,.2f}".format(activityCost) }}</span>
+                <li class="flex justify-between py-3 text-on-surface-variant">
+                    <span class="font-body text-body-md">Activities</span>
+                    <span class="font-body text-body-md text-on-surface">${{ "{:,.2f}".format(activityCost) }}</span>
                 </li>
-                <li class="divider">
-                    <span class="label">Subtotal</span>
-                    <span class="value">${{ "{:,.2f}".format(sub_total) }}</span>
+                <li class="flex justify-between py-3 text-on-surface-variant border-t border-outline-variant/30 mt-2">
+                    <span class="font-body text-body-md">Subtotal</span>
+                    <span class="font-body text-body-md text-on-surface">${{ "{:,.2f}".format(sub_total) }}</span>
                 </li>
-                <li>
-                    <span class="label">Tax (10.25%)</span>
-                    <span class="value">${{ "{:,.2f}".format(tax) }}</span>
+                <li class="flex justify-between py-3 text-on-surface-variant">
+                    <span class="font-body text-body-md">Tax (10.25%)</span>
+                    <span class="font-body text-body-md text-on-surface">${{ "{:,.2f}".format(tax) }}</span>
                 </li>
-                <li class="grand-total">
-                    <span class="label">Grand total</span>
-                    <span class="value">${{ "{:,.2f}".format(total) }}</span>
+                <li class="flex justify-between py-4 border-t-2 border-primary mt-2 items-baseline">
+                    <span class="font-display text-headline-md text-primary">Grand total</span>
+                    <span class="font-display text-headline-md text-primary">${{ "{:,.2f}".format(total) }}</span>
                 </li>
             </ul>
         </div>
+
     </section>
 
-    <div class="summary-actions">
-        <a href="{{ url_for('hotels_menu') }}">Book another hotel &rarr;</a>
-        <a href="{{ url_for('home_page') }}">Return home</a>
+    {# ---------- Footer actions ---------- #}
+    <div class="mt-section-gap-sm flex flex-wrap gap-8 items-center">
+        <a href="{{ url_for('hotels_menu') }}"
+           class="bg-[#FF8C42] text-white px-8 py-4 rounded-xl font-body text-label-lg uppercase hover:scale-105 transition-transform shadow-ambient-sm">
+            Book another stay &rarr;
+        </a>
+        <a href="{{ url_for('home_page') }}"
+           class="font-body text-body-md text-primary hover:underline">
+            Return home
+        </a>
     </div>
+
 </main>
 {% endblock %}

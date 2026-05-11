@@ -1,15 +1,168 @@
+{# =====================================================================
+   base.html — shared layout used by every page in the app.
+
+   Each page that extends this template gets:
+     1. The Tailwind CSS CDN, pre-configured with the design tokens
+        from `wireframes/.../DESIGN.md` (Sandy Neutral surface, Deep
+        Ocean Blue primary, Sunset Orange secondary, etc.).
+     2. The two brand fonts: Playfair Display (serif, for editorial
+        headlines) and Plus Jakarta Sans (sans, for body and labels).
+     3. Material Symbols Outlined — the icon set the wireframes use.
+     4. A small custom stylesheet (`styles.css`) for things Tailwind
+        can't do directly: glassmorphic backdrop blur, organic shape
+        radius, the subtle background pattern.
+
+   Pages declare two blocks:
+     - {% block title %}…{% endblock %}  → window title
+     - {% block body %}…{% endblock %}   → the visible page content
+
+   The shared top nav and footer are included automatically so every
+   page has the same chrome.
+   ===================================================================== #}
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Honolulu Hotels{% endblock %}</title>
+    <title>{% block title %}{{ brand }}{% endblock %}</title>
+
+    {# Tailwind CDN — gives us utility classes without a build step. #}
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    {# Google Fonts: Playfair Display (display/serif) + Plus Jakarta Sans (body). #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    {# Material Symbols icon font — referenced by name in templates,
+       e.g. <span class="material-symbols-outlined">pool</span>. #}
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    {# Custom CSS for things Tailwind can't express cleanly. #}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    {# Tailwind configuration — extends the default theme with the
+       design tokens lifted from the wireframes' tailwind.config.
+       Keeping this inline means a student can read the whole design
+       system in one place. #}
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // Core surfaces — Sandy Neutral family.
+                        "surface":                   "#fdfae7",
+                        "surface-bright":            "#fdfae7",
+                        "surface-dim":               "#dddbc8",
+                        "surface-variant":           "#e6e3d0",
+                        "surface-container-lowest":  "#ffffff",
+                        "surface-container-low":     "#f7f4e1",
+                        "surface-container":         "#f1eedb",
+                        "surface-container-high":    "#ece9d6",
+                        "surface-container-highest": "#e6e3d0",
+                        "background":                "#fdfae7",
+
+                        // Text colors that pair with the surfaces above.
+                        "on-surface":          "#1c1c11",
+                        "on-surface-variant":  "#3f484c",
+                        "on-background":       "#1c1c11",
+                        "inverse-surface":     "#313124",
+                        "inverse-on-surface":  "#f4f1de",
+
+                        // Primary — Deep Ocean Blue.  Headlines, brand mark, structural elements.
+                        "primary":            "#004655",
+                        "on-primary":         "#ffffff",
+                        "primary-container":  "#005f73",
+                        "on-primary-container": "#91d7ee",
+                        "inverse-primary":    "#8bd1e8",
+
+                        // Secondary — Sunset Orange family.  Primary CTAs and the active nav state.
+                        "secondary":          "#9b4500",
+                        "on-secondary":       "#ffffff",
+                        "secondary-container":"#fc8a40",
+                        "on-secondary-container": "#672c00",
+
+                        // Tertiary — Palm Green.  Used for soft accents, icons, hover borders.
+                        "tertiary":           "#00474c",
+                        "on-tertiary":        "#ffffff",
+                        "tertiary-container": "#136066",
+                        "on-tertiary-container": "#95d8df",
+
+                        "error":              "#ba1a1a",
+                        "on-error":           "#ffffff",
+                        "error-container":    "#ffdad6",
+                        "on-error-container": "#93000a",
+
+                        // Outline / borders.
+                        "outline":          "#6f797c",
+                        "outline-variant":  "#bfc8cc",
+                        "surface-tint":     "#13677b",
+                    },
+
+                    // Border radius — soft and rounded, never sharp.
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg":      "0.5rem",
+                        "xl":      "0.75rem",
+                        "2xl":     "1rem",
+                        "3xl":     "1.5rem",
+                        "full":    "9999px",
+                    },
+
+                    // Spacing tokens: matches the wireframe's 8-pt base
+                    // plus named slots for layout margins and section gaps.
+                    spacing: {
+                        "base":            "8px",
+                        "gutter":          "24px",
+                        "margin-mobile":   "20px",
+                        "margin-desktop":  "64px",
+                        "section-gap-sm":  "64px",
+                        "section-gap-lg":  "120px",
+                        "container-max":   "1280px",
+                    },
+
+                    // Font families — every type token uses one of these two.
+                    fontFamily: {
+                        "display":  ["Playfair Display", "Georgia", "serif"],
+                        "body":     ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+                    },
+
+                    // Type scale.  Sizes paired with line-height + tracking
+                    // so we can apply a single class (e.g. `text-display-lg`).
+                    fontSize: {
+                        "display-lg":        ["64px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "display-lg-mobile": ["40px", { lineHeight: "1.2", fontWeight: "700" }],
+                        "headline-lg":       ["48px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "headline-lg-mobile":["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "headline-md":       ["32px", { lineHeight: "1.3", fontWeight: "500" }],
+                        "body-lg":           ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "body-md":           ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "label-lg":          ["14px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "label-sm":          ["12px", { lineHeight: "1.2", fontWeight: "500" }],
+                    },
+
+                    // Soft, Ocean-Blue-tinted shadow — used to "lift" cards
+                    // off the sandy surface without harsh edges.
+                    boxShadow: {
+                        "ambient":     "0 8px 30px rgba(0, 95, 115, 0.08)",
+                        "ambient-sm":  "0 2px 12px rgba(0, 95, 115, 0.06)",
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
+<body class="bg-surface text-on-surface font-body antialiased overflow-x-hidden">
+
+    {# Shared top nav (glassmorphic) — see _nav.html. #}
+    {% include "_nav.html" %}
+
+    {# Page-specific content goes here. #}
     {% block body %}{% endblock %}
+
+    {# Shared footer — see _footer.html. #}
+    {% include "_footer.html" %}
+
 </body>
 </html>

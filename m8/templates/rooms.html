@@ -1,104 +1,304 @@
 {% extends "base.html" %}
-{% block title %}{{ hotel.name }} — Rooms & Booking{% endblock %}
+
+{# =====================================================================
+   rooms.html — hotel detail + booking page.
+
+   Mirrors the wireframe at wireframes/.../hotel_detail_honolulu_hotels:
+     1. Breadcrumb + hotel name header (Playfair Display, location + rating)
+     2. Bento gallery — one big image + three smaller tiles
+     3. 8 / 4 main grid:
+          Left  (col-span-8): About, Tags, Pick Your Room, Amenities
+          Right (col-span-4): Sticky glass booking widget with all form fields
+
+   The booking form on the right is what drives /trip_summary.  The
+   left "Pick Your Room" gallery is editorial — it shows the inventory
+   so the visitor can read room names and prices while picking from the
+   dropdown in the form.  The dropdown is the single source of truth
+   for which room gets booked.
+   ===================================================================== #}
+
+{% block title %}{{ hotel.name }} — {{ brand }}{% endblock %}
 
 {% block body %}
-<section class="banner">
-    <div class="banner-image" style="background-image: url('{{ url_for('static', filename=hotel.hero_image) }}');"></div>
-    <div class="banner-scrim"></div>
-    <div class="banner-content container">
-        <p class="caption">{{ hotel.location }}</p>
-        <h1 class="display-l">{{ hotel.name }}</h1>
+<main class="pt-[100px] pb-section-gap-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+
+    {# ---------- Breadcrumb ---------- #}
+    <div class="flex items-center gap-2 text-on-surface-variant font-body text-label-sm mb-6">
+        <a class="hover:text-primary transition-colors" href="{{ url_for('home_page') }}">Home</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <a class="hover:text-primary transition-colors" href="{{ url_for('hotels_menu') }}">Destinations</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <span class="text-primary font-semibold">{{ hotel.name }}</span>
     </div>
-</section>
 
-<main class="container section">
-    <a class="back-link" href="{{ url_for('hotels_menu') }}">&larr; All hotels</a>
+    {# ---------- Header: hotel name + location + rating ---------- #}
+    <header class="mb-8">
+        <h1 class="font-display text-display-lg-mobile md:text-headline-lg text-primary mb-3">
+            {{ hotel.name }}
+        </h1>
+        <div class="flex flex-wrap items-center gap-6 text-on-surface-variant font-body text-body-md">
+            <span class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-[20px] text-secondary fill">location_on</span>
+                {{ hotel.location }}
+            </span>
+            <span class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-[20px] text-secondary fill">star</span>
+                {{ "%.1f"|format(hotel.rating) }} ({{ hotel.review_count }} reviews)
+            </span>
+        </div>
+    </header>
 
-    <div class="rooms-layout">
-        <div class="rooms-column">
-            <header class="section-title">
-                <span class="caption">Rooms</span>
-                <h2 class="display-m">Pick your room.</h2>
-            </header>
+    {# ---------- Bento gallery ----------
+       4 tiles total: one big image (col-span-2 row-span-2) and three
+       smaller ones that fill the right and bottom of the 4x2 grid.
+       Falls back gracefully to one column on mobile. #}
+    <section class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 mb-section-gap-sm h-auto md:h-[560px]">
 
-            <div class="room-list">
-                {% for name, info in hotel.rooms.items() %}
-                <article class="room-row">
-                    <div class="room-image">
-                        <img src="{{ url_for('static', filename=info.image) }}" alt="{{ name }} room at {{ hotel.name }}">
-                    </div>
-                    <div class="room-body">
-                        <h3 class="display-m">{{ name }}</h3>
-                        <div class="price tabular">${{ "{:,}".format(info.price) }} <span class="price-suffix">/ night</span></div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
+        {# Big tile — always the hero image. #}
+        <div class="md:col-span-2 md:row-span-2 rounded-2xl overflow-hidden relative group shadow-ambient-sm aspect-[4/3] md:aspect-auto">
+            <img alt="{{ hotel.name }} exterior"
+                 src="{{ url_for('static', filename=gallery[0] if gallery else hotel.hero_image) }}"
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
         </div>
 
-        <aside class="booking-form-wrap">
-            <form class="booking-form" action="{{ url_for('trip_summary') }}" method="POST">
-                <input type="hidden" name="hotel_slug" value="{{ hotel_slug }}">
+        {# Three smaller tiles — drawn from the per-hotel room images.
+           Hidden on mobile to keep the layout clean. #}
+        {% if gallery|length > 1 %}
+        <div class="hidden md:block md:col-span-1 md:row-span-1 rounded-2xl overflow-hidden relative group shadow-ambient-sm">
+            <img alt="Room at {{ hotel.name }}"
+                 src="{{ url_for('static', filename=gallery[1]) }}"
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+        {% endif %}
+        {% if gallery|length > 2 %}
+        <div class="hidden md:block md:col-span-1 md:row-span-1 rounded-2xl overflow-hidden relative group shadow-ambient-sm">
+            <img alt="Room at {{ hotel.name }}"
+                 src="{{ url_for('static', filename=gallery[2]) }}"
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+        {% endif %}
+        {% if gallery|length > 3 %}
+        <div class="hidden md:block md:col-span-2 md:row-span-1 rounded-2xl overflow-hidden relative group shadow-ambient-sm">
+            <img alt="Room at {{ hotel.name }}"
+                 src="{{ url_for('static', filename=gallery[3]) }}"
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        </div>
+        {% endif %}
+    </section>
 
-                <h2 class="display-m">Plan your trip</h2>
-                <p style="color: var(--driftwood); margin-top: 0; margin-bottom: 24px; font-size: 15px;">Fill in your details to see an itemized cost summary.</p>
+    {# ---------- Main layout: 8/4 grid ---------- #}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
 
-                <div class="field-group">
-                    <h3>Your trip</h3>
+        {# =============================================================
+           LEFT COLUMN — About, Tags, Rooms, Amenities
+           ============================================================= #}
+        <div class="lg:col-span-8 space-y-section-gap-sm">
 
-                    <label for="name">Full name</label>
-                    <input type="text" id="name" name="name" required>
-
-                    <label for="dates">Start date</label>
-                    <input type="date" id="dates" name="dates" required>
-
-                    <label for="num_nights">Number of nights</label>
-                    <input type="number" id="num_nights" name="num_nights" min="1" value="3" required>
-
-                    <label for="ticketPrice">Airfare per traveler (USD)</label>
-                    <input type="number" id="ticketPrice" name="ticketPrice" min="0" placeholder="500" required>
-
-                    <label for="Rooms">Room</label>
-                    <select id="Rooms" name="Rooms" required>
-                        {% for name, info in hotel.rooms.items() %}
-                        <option value="{{ name }}|{{ info.price }}">{{ name }} — ${{ "{:,}".format(info.price) }}/night</option>
-                        {% endfor %}
-                    </select>
+            {# ----- About section ----- #}
+            <section>
+                <div class="flex items-center gap-4 mb-6">
+                    <h2 class="font-display text-headline-md text-primary">About this sanctuary</h2>
+                    <div class="h-px flex-1 bg-outline-variant/30"></div>
                 </div>
+                <p class="font-body text-body-lg text-on-surface-variant">{{ hotel.description }}</p>
 
-                <div class="field-group">
-                    <h3>Add activities</h3>
-                    <div class="checkbox-list">
-                        {% for key, label, price in activities %}
-                        <label>
-                            <input type="checkbox" name="activity" value="{{ key }}|{{ price }}">
-                            <span>{{ label }} — ${{ price }}</span>
-                        </label>
-                        {% endfor %}
+                {# Tag chips — soft tertiary/primary/secondary fills. #}
+                <div class="flex flex-wrap gap-3 mt-8">
+                    {% for tag in hotel.tags %}
+                    <span class="bg-tertiary-container/10 text-tertiary border border-tertiary-container/20 font-body text-label-sm px-4 py-2 rounded-full">
+                        {{ tag }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {# ----- Pick your room ----- #}
+            <section>
+                <div class="flex items-center gap-4 mb-6">
+                    <h2 class="font-display text-headline-md text-primary">Pick your room</h2>
+                    <div class="h-px flex-1 bg-outline-variant/30"></div>
+                </div>
+                <p class="font-body text-body-md text-on-surface-variant mb-6">
+                    Browse the inventory below, then choose your room and dates in the booking
+                    panel to see your full trip cost.
+                </p>
+
+                <div class="space-y-4">
+                    {% for name, info in hotel.rooms.items() %}
+                    <article class="grid grid-cols-1 sm:grid-cols-[200px_1fr] gap-0 bg-surface-container-lowest rounded-2xl overflow-hidden shadow-ambient-sm">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img alt="{{ name }} at {{ hotel.name }}"
+                                 src="{{ url_for('static', filename=info.image) }}"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 flex flex-col justify-center">
+                            <h3 class="font-display text-headline-md text-primary mb-2 leading-tight">{{ name }}</h3>
+                            <div class="font-body text-body-md text-on-surface-variant">
+                                <span class="font-display text-headline-md text-primary tabular">${{ "{:,}".format(info.price) }}</span>
+                                <span class="font-body text-body-md">/ night</span>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {# ----- Resort amenities ----- #}
+            <section>
+                <div class="flex items-center gap-4 mb-6">
+                    <h2 class="font-display text-headline-md text-primary">Resort amenities</h2>
+                    <div class="h-px flex-1 bg-outline-variant/30"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    {% for icon, label in hotel.amenities %}
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-primary shrink-0">
+                            <span class="material-symbols-outlined">{{ icon }}</span>
+                        </div>
+                        <span class="font-body text-body-md text-on-surface">{{ label }}</span>
                     </div>
+                    {% endfor %}
                 </div>
+            </section>
 
-                <div class="field-group">
-                    <h3>Travel style</h3>
-                    <div class="radio-row">
-                        <label><input type="radio" name="style" value="luxury"> Luxury</label>
-                        <label><input type="radio" name="style" value="budget"> Budget</label>
-                        <label><input type="radio" name="style" value="adventure"> Adventure</label>
+        </div>
+
+        {# =============================================================
+           RIGHT COLUMN — Sticky glass booking widget
+           ============================================================= #}
+        <aside class="lg:col-span-4">
+
+            {# `sticky top-[100px]` keeps the widget pinned below the
+               fixed nav as the visitor scrolls.  `align-self: start`
+               via the grid means the column doesn't stretch. #}
+            <div class="lg:sticky lg:top-[100px] glass-panel rounded-3xl p-6 shadow-ambient">
+
+                <form action="{{ url_for('trip_summary') }}" method="POST" class="space-y-5">
+
+                    {# Hidden field — tells the /trip_summary handler which
+                       hotel this booking is for, since the form is posted
+                       from the per-hotel page and the URL doesn't carry the slug. #}
+                    <input type="hidden" name="hotel_slug" value="{{ hotel_slug }}">
+
+                    {# Price headline. #}
+                    <div class="flex justify-between items-baseline pb-2 border-b border-outline-variant/30">
+                        <div>
+                            <span class="font-body text-label-sm uppercase text-on-surface-variant tracking-wider">From</span>
+                            <div>
+                                <span class="font-display text-headline-md text-primary tabular">${{ "{:,}".format(starting_price) }}</span>
+                                <span class="font-body text-body-md text-on-surface-variant"> / night</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="field-group">
-                    <h3>Notes</h3>
-                    <label for="comments">Anything we should know?</label>
-                    <textarea id="comments" name="comments" rows="3" maxlength="500" placeholder="Anniversary trip, dietary preferences, etc."></textarea>
-                </div>
+                    {# --- Trip dates --- #}
+                    <div>
+                        <label for="dates" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Check-in</label>
+                        <div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2">calendar_today</span>
+                            <input id="dates" name="dates" type="date" required
+                                   class="bg-transparent border-none p-0 focus:ring-0 w-full font-body text-body-md text-primary outline-none">
+                        </div>
+                    </div>
 
-                <div class="form-actions">
-                    <button class="btn btn-primary" type="submit">See trip summary &rarr;</button>
-                    <button class="btn-link" type="reset">Clear form</button>
-                </div>
-            </form>
+                    <div>
+                        <label for="num_nights" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Nights</label>
+                        <div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2">moon_stars</span>
+                            <input id="num_nights" name="num_nights" type="number" min="1" value="3" required
+                                   class="bg-transparent border-none p-0 focus:ring-0 w-full font-body text-body-md text-primary outline-none">
+                        </div>
+                    </div>
+
+                    {# --- Room dropdown --- #}
+                    <div>
+                        <label for="Rooms" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Room</label>
+                        <div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2">king_bed</span>
+                            <select id="Rooms" name="Rooms" required
+                                    class="bg-transparent border-none p-0 focus:ring-0 w-full font-body text-body-md text-primary outline-none appearance-none">
+                                {% for name, info in hotel.rooms.items() %}
+                                <option value="{{ name }}|{{ info.price }}">{{ name }} — ${{ "{:,}".format(info.price) }}/night</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    {# --- Traveler --- #}
+                    <div>
+                        <label for="name" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Traveler name</label>
+                        <div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2">person</span>
+                            <input id="name" name="name" type="text" required
+                                   class="bg-transparent border-none p-0 focus:ring-0 w-full font-body text-body-md text-primary outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="ticketPrice" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Airfare (USD)</label>
+                        <div class="flex items-center bg-surface-container-lowest border border-tertiary-container/30 rounded-lg px-3 py-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary-container mr-2">flight</span>
+                            <input id="ticketPrice" name="ticketPrice" type="number" min="0" placeholder="500" required
+                                   class="bg-transparent border-none p-0 focus:ring-0 w-full font-body text-body-md text-primary outline-none">
+                        </div>
+                    </div>
+
+                    {# --- Activities --- #}
+                    <div class="pt-4 border-t border-outline-variant/30">
+                        <span class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-3">Add experiences</span>
+                        <div class="space-y-2">
+                            {% for key, label, price in activities %}
+                            <label class="flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-outline-variant/40 bg-surface-container-lowest hover:border-primary transition-colors cursor-pointer">
+                                <span class="flex items-center gap-3">
+                                    <input type="checkbox" name="activity" value="{{ key }}|{{ price }}"
+                                           class="rounded border-tertiary-container/40 text-secondary focus:ring-secondary">
+                                    <span class="font-body text-body-md text-primary">{{ label }}</span>
+                                </span>
+                                <span class="font-body text-body-md text-on-surface-variant tabular">${{ price }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# --- Travel style (radio pills) --- #}
+                    <div>
+                        <span class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-3">Travel style</span>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/40 bg-surface-container-lowest hover:border-primary cursor-pointer">
+                                <input type="radio" name="style" value="luxury" class="text-secondary focus:ring-secondary">
+                                <span class="font-body text-body-md text-primary">Luxury</span>
+                            </label>
+                            <label class="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/40 bg-surface-container-lowest hover:border-primary cursor-pointer">
+                                <input type="radio" name="style" value="budget" class="text-secondary focus:ring-secondary">
+                                <span class="font-body text-body-md text-primary">Budget</span>
+                            </label>
+                            <label class="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/40 bg-surface-container-lowest hover:border-primary cursor-pointer">
+                                <input type="radio" name="style" value="adventure" class="text-secondary focus:ring-secondary">
+                                <span class="font-body text-body-md text-primary">Adventure</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    {# --- Notes --- #}
+                    <div>
+                        <label for="comments" class="block font-body text-label-sm uppercase text-on-surface-variant tracking-wider mb-1 ml-1">Notes</label>
+                        <textarea id="comments" name="comments" rows="3" maxlength="500"
+                                  placeholder="Anniversary trip, dietary preferences, etc."
+                                  class="w-full bg-surface-container-lowest border border-tertiary-container/30 rounded-lg p-3 font-body text-body-md text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"></textarea>
+                    </div>
+
+                    {# --- Submit --- #}
+                    <button type="submit"
+                            class="w-full bg-[#FF8C42] text-white py-4 rounded-xl font-body text-label-lg uppercase hover:scale-[1.02] transition-transform shadow-ambient-sm flex justify-center items-center gap-2">
+                        Reserve your stay
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                    <p class="text-center font-body text-label-sm text-on-surface-variant">You won't be charged yet</p>
+
+                </form>
+            </div>
         </aside>
+
     </div>
 </main>
 {% endblock %}

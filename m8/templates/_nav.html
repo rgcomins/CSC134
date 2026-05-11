@@ -1,0 +1,70 @@
+{# =====================================================================
+   _nav.html — glassmorphic top navigation, included on every page.
+
+   The desktop and mobile variants are rendered side-by-side; Tailwind's
+   responsive prefixes (`hidden md:flex` / `md:hidden`) decide which
+   one is visible at each breakpoint.
+
+   Design notes:
+     - Position `fixed top-0` so the nav stays in view as the user
+       scrolls.  Pages add top padding (`pt-20`) so content isn't
+       hidden behind the bar.
+     - `bg-surface/70 backdrop-blur-xl` is the glass effect — the
+       sandy surface peeks through at 70% opacity with a heavy blur.
+     - The "Destinations" link is the closest equivalent to our /hotels
+       menu, so we point it there and underline it when active.
+   ===================================================================== #}
+
+{# ---------- Desktop nav (≥ md) ---------- #}
+<nav class="fixed top-0 left-0 w-full z-50 h-20 bg-surface/70 backdrop-blur-xl shadow-ambient-sm hidden md:flex">
+    <div class="max-w-container-max w-full mx-auto flex justify-between items-center px-margin-desktop">
+
+        {# Brand mark — Playfair Display, primary blue, tracked tight. #}
+        <a href="{{ url_for('home_page') }}"
+           class="font-display text-headline-md tracking-tight text-primary uppercase">
+            {{ brand|default("Aloha Escapes") }}
+        </a>
+
+        {# Primary nav links.  Only "Destinations" routes anywhere right now;
+           the other three are placeholders matching the wireframe so the bar
+           has the right visual rhythm. #}
+        <div class="flex items-center space-x-8">
+            <a href="{{ url_for('hotels_menu') }}"
+               class="text-secondary border-b-2 border-secondary pb-1 font-body text-label-lg uppercase">
+                Destinations
+            </a>
+            <a href="#"
+               class="text-on-surface-variant hover:text-primary transition-colors font-body text-label-lg uppercase">
+                Experiences
+            </a>
+            <a href="#"
+               class="text-on-surface-variant hover:text-primary transition-colors font-body text-label-lg uppercase">
+                Gallery
+            </a>
+            <a href="#"
+               class="text-on-surface-variant hover:text-primary transition-colors font-body text-label-lg uppercase">
+                Our Spirit
+            </a>
+        </div>
+
+        {# Search icon + Sunset Orange "Book Now" pill — Book Now sends the
+           user into the hotel menu so it ties into our real flow. #}
+        <div class="flex items-center space-x-4">
+            <span class="material-symbols-outlined text-primary cursor-pointer hover:text-secondary transition-colors">search</span>
+            <a href="{{ url_for('hotels_menu') }}"
+               class="bg-[#FF8C42] text-white px-6 py-2 rounded-lg font-body text-label-lg uppercase hover:scale-105 transition-transform duration-200">
+                Book Now
+            </a>
+        </div>
+
+    </div>
+</nav>
+
+{# ---------- Mobile nav (< md) ---------- #}
+<nav class="fixed top-0 left-0 w-full z-50 h-16 bg-surface/90 backdrop-blur-md shadow-ambient-sm md:hidden flex justify-between items-center px-margin-mobile">
+    <a href="{{ url_for('home_page') }}"
+       class="font-display text-headline-lg-mobile tracking-tight text-primary uppercase">
+        {{ brand|default("Aloha Escapes") }}
+    </a>
+    <span class="material-symbols-outlined text-primary text-2xl">menu</span>
+</nav>

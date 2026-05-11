@@ -1,33 +1,105 @@
 {% extends "base.html" %}
-{% block title %}Hotels — Honolulu Hotels{% endblock %}
+
+{# =====================================================================
+   hotels.html — curated hotel menu.
+
+   The wireframes don't include a menu page (their site uses a search
+   instead), so this page applies the same design language to our
+   "five-card grid" pattern:
+     - Editorial Playfair Display title
+     - Breadcrumb on top using the wireframe-style label-sm chips
+     - Borderless cards with ambient Ocean-Blue shadow + image zoom
+     - Tag pill chips per card
+     - "Choose this hotel →" link in Sunset Orange
+   ===================================================================== #}
+
+{% block title %}Destinations — {{ brand }}{% endblock %}
 
 {% block body %}
-<main class="container section">
-    <a class="back-link" href="{{ url_for('home_page') }}">&larr; Home</a>
+<main class="pt-[100px] pb-section-gap-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop bg-pattern">
 
-    <header style="margin-bottom: 48px; max-width: 720px;">
-        <p class="caption" style="margin-bottom: 8px;">Curated for this trip</p>
-        <h1 class="display-l">Five places to stay in Honolulu.</h1>
-        <p style="color: var(--driftwood);">A small, hand-picked set of Waikiki properties. Pick one to see its rooms and plan your trip.</p>
+    {# ---------- Breadcrumb ---------- #}
+    <div class="flex items-center gap-2 text-on-surface-variant font-body text-label-sm mb-6">
+        <a class="hover:text-primary transition-colors" href="{{ url_for('home_page') }}">Home</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <span class="text-primary font-semibold">Destinations</span>
+    </div>
+
+    {# ---------- Page header ---------- #}
+    <header class="mb-section-gap-sm max-w-3xl">
+        <p class="font-body text-label-lg uppercase text-secondary mb-4 tracking-wider">Curated for this trip</p>
+        <h1 class="font-display text-headline-lg-mobile md:text-headline-lg text-primary mb-4">
+            Five sanctuaries on Honolulu's shore.
+        </h1>
+        <p class="font-body text-body-lg text-on-surface-variant">
+            A small, hand-picked set of Waikiki properties. Each one tells a different story —
+            choose where yours begins.
+        </p>
     </header>
 
-    <section class="hotel-grid">
+    {# ---------- Hotel card grid ----------
+       Responsive: 1 col mobile → 2 col tablet → 3 col desktop. #}
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
         {% for hotel in hotels %}
-        <a class="card card-link hotel-card" href="{{ url_for('rooms', hotel_slug=hotel.slug) }}">
-            <div class="card-image">
-                <img src="{{ url_for('static', filename=hotel.hero_image) }}" alt="{{ hotel.name }}">
+
+        {# Each card is a single <a> so the whole tile is keyboard-focusable
+           and clickable.  `group` lets us animate the image on hover from
+           the parent. #}
+        <a href="{{ url_for('rooms', hotel_slug=hotel.slug) }}"
+           class="group block bg-surface-container-lowest rounded-2xl overflow-hidden shadow-ambient hover:shadow-ambient hover:-translate-y-1 transition-all duration-300">
+
+            {# Card image — 16:10 ratio.  `group-hover:scale-105` is the
+               subtle zoom the design system asks for. #}
+            <div class="aspect-[16/10] overflow-hidden">
+                <img alt="{{ hotel.name }}"
+                     src="{{ url_for('static', filename=hotel.hero_image) }}"
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             </div>
-            <div class="card-body">
-                <h3 class="display-m">{{ hotel.name }}</h3>
-                <p class="tagline">{{ hotel.tagline }}</p>
-                <div class="meta">
-                    <span>{{ hotel.location }}</span>
-                    <span class="price">from <strong>${{ "{:,}".format(hotel.starting_price) }}</strong>/night</span>
+
+            <div class="p-6">
+
+                {# Location + rating row, in label-sm uppercase. #}
+                <div class="flex items-center justify-between text-on-surface-variant font-body text-label-sm uppercase tracking-wider mb-3">
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px] text-secondary">location_on</span>
+                        {{ hotel.location }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px] text-secondary fill">star</span>
+                        {{ "%.1f"|format(hotel.rating) }}
+                    </span>
                 </div>
-                <div class="cta-row">Choose this hotel &rarr;</div>
+
+                {# Hotel name in Playfair Display, primary blue. #}
+                <h3 class="font-display text-headline-md text-primary mb-3 leading-snug">{{ hotel.name }}</h3>
+
+                <p class="font-body text-body-md text-on-surface-variant mb-4">{{ hotel.tagline }}</p>
+
+                {# Tag chips — low-opacity tertiary/primary fills. #}
+                <div class="flex flex-wrap gap-2 mb-5">
+                    {% for tag in hotel.tags[:2] %}
+                    <span class="bg-tertiary-container/10 text-tertiary border border-tertiary-container/20 font-body text-label-sm px-3 py-1 rounded-full">
+                        {{ tag }}
+                    </span>
+                    {% endfor %}
+                </div>
+
+                {# Footer row: starting price on the left, Sunset Orange CTA on the right. #}
+                <div class="flex justify-between items-baseline pt-4 border-t border-outline-variant/30">
+                    <span class="font-body text-body-md text-on-surface-variant">
+                        from
+                        <strong class="font-display text-headline-md text-primary tabular">${{ "{:,}".format(hotel.starting_price) }}</strong>
+                        / night
+                    </span>
+                    <span class="text-secondary font-body text-label-lg uppercase group-hover:underline">
+                        Choose &rarr;
+                    </span>
+                </div>
             </div>
         </a>
+
         {% endfor %}
     </section>
+
 </main>
 {% endblock %}

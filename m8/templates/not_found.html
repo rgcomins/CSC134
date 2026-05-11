@@ -1,12 +1,31 @@
 {% extends "base.html" %}
-{% block title %}Hotel not found — Honolulu Hotels{% endblock %}
+
+{# =====================================================================
+   not_found.html — quiet 404 used when a hotel slug isn't recognized.
+
+   Centered Playfair headline, a soft sand-colored card, one Sunset
+   Orange CTA back to /hotels.  Keeps the nav and footer for context.
+   ===================================================================== #}
+
+{% block title %}Hotel not found — {{ brand }}{% endblock %}
 
 {% block body %}
-<main class="container">
-    <div class="not-found">
-        <h1 class="display-l">We couldn't find that hotel.</h1>
-        <p>The hotel you were looking for isn't in our curated set.</p>
-        <a class="btn btn-primary" href="{{ url_for('hotels_menu') }}">&larr; Back to all hotels</a>
+<main class="pt-[120px] pb-section-gap-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+
+    <div class="min-h-[50vh] flex flex-col items-center justify-center text-center max-w-xl mx-auto">
+        <span class="material-symbols-outlined text-[64px] text-tertiary-container mb-4">explore_off</span>
+        <h1 class="font-display text-headline-lg-mobile md:text-headline-lg text-primary mb-4">
+            We couldn't find that hotel.
+        </h1>
+        <p class="font-body text-body-lg text-on-surface-variant mb-10">
+            The property you were looking for isn't in our curated set. Head back to the
+            destinations menu to pick another sanctuary.
+        </p>
+        <a href="{{ url_for('hotels_menu') }}"
+           class="bg-[#FF8C42] text-white px-8 py-4 rounded-xl font-body text-label-lg uppercase hover:scale-105 transition-transform shadow-ambient-sm">
+            Back to destinations &rarr;
+        </a>
     </div>
+
 </main>
 {% endblock %}

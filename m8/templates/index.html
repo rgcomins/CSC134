@@ -1,17 +1,95 @@
 {% extends "base.html" %}
-{% block title %}Honolulu Hotels — Find your stay{% endblock %}
+
+{# =====================================================================
+   index.html — landing page.
+
+   Layout (per the homepage wireframe):
+     - Full-bleed hero photo with a gradient that fades into the
+       Sandy Neutral surface at the bottom, blending the hero into
+       the rest of the page.
+     - Editorial Playfair Display headline + supporting body copy.
+     - Glassmorphic CTA panel positioned over the hero photo.
+
+   We've adapted the wireframe's "search" panel into a simpler CTA
+   panel since the app doesn't have search yet — the panel's job is
+   to send the visitor into /hotels.
+   ===================================================================== #}
+
+{% block title %}{{ brand }} — Discover Your Sanctuary{% endblock %}
 
 {% block body %}
-<section class="hero">
-    <div class="hero-image" style="background-image: url('{{ url_for('static', filename='rainbow_map.jpg') }}');"></div>
-    <div class="hero-scrim"></div>
-    <div class="hero-content container">
-        <p class="caption" style="color: var(--paper); opacity: 0.85; margin-bottom: 12px;">Honolulu · Hawaii</p>
-        <h1 class="display-xl">Find your stay in Honolulu.</h1>
-        <p>Five iconic Waikiki hotels, one quiet booking experience. Pick a property, plan the trip, see the cost.</p>
-        <div style="margin-top: 32px;">
-            <a class="btn btn-primary" href="{{ url_for('hotels_menu') }}">Browse hotels &rarr;</a>
+{# `main` is offset down by the height of the fixed top nav. #}
+<main class="pt-16 md:pt-20">
+
+    {# ---------- Hero section ----------
+       `relative` so the absolutely-positioned background + content stack
+       correctly.  `overflow-hidden` clips the background image at the edges. #}
+    <section class="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+
+        {# Background image layer.  z-0 so it sits behind everything. #}
+        <div class="absolute inset-0 z-0">
+            <img alt="A quiet Honolulu shoreline at golden hour with palm fronds framing the view"
+                 src="{{ url_for('static', filename='rainbow_map.jpg') }}"
+                 class="w-full h-full object-cover">
+
+            {# Two stacked overlays:
+               1. A dark gradient at the top fading out by mid-height.
+                  This anchors the white headline against the bright ocean.
+               2. A fade into the Sandy Neutral surface at the bottom so
+                  the hero blends into the rest of the page. #}
+            <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/15 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface/95"></div>
         </div>
-    </div>
-</section>
+
+        {# Foreground content. z-10 so it sits above the gradient. #}
+        <div class="relative z-10 w-full max-w-container-max flex flex-col items-center text-center">
+
+            {# Editorial Playfair Display headline.  Heavy text-shadow keeps
+               it legible even when the photo behind it is bright ocean. #}
+            <h1 class="font-display text-display-lg-mobile md:text-display-lg text-white mb-6"
+                style="text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 8px 32px rgba(0,0,0,0.6);">
+                Discover Your Sanctuary
+            </h1>
+            <p class="font-body text-body-lg text-white max-w-2xl mb-12 hidden md:block"
+               style="text-shadow: 0 1px 2px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.5);">
+                Immerse yourself in the rhythm of the ocean and the lush beauty of Honolulu.
+                Five curated stays for the discerning traveler.
+            </p>
+
+            {# Glassmorphic CTA panel.  `.glass-panel` is defined in styles.css —
+               a blurred, semi-transparent sand surface lifted off the photo. #}
+            <div class="glass-panel w-full max-w-3xl rounded-2xl p-6 md:p-8 shadow-ambient">
+                <div class="flex flex-col md:flex-row items-center gap-6 justify-between">
+
+                    {# Two short info chips — give the panel visual weight without
+                       pretending to be a real search box. #}
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-tertiary-container">location_on</span>
+                        <div class="text-left">
+                            <div class="font-body text-label-sm uppercase text-on-surface-variant tracking-wider">Location</div>
+                            <div class="font-body text-body-md text-primary">Honolulu, Hawaii</div>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block w-px h-12 bg-outline-variant/40"></div>
+
+                    <div class="flex items-center gap-4">
+                        <span class="material-symbols-outlined text-tertiary-container">apartment</span>
+                        <div class="text-left">
+                            <div class="font-body text-label-sm uppercase text-on-surface-variant tracking-wider">Curated</div>
+                            <div class="font-body text-body-md text-primary">5 Properties</div>
+                        </div>
+                    </div>
+
+                    {# Sunset Orange CTA — primary action, routes to /hotels. #}
+                    <a href="{{ url_for('hotels_menu') }}"
+                       class="w-full md:w-auto bg-[#FF8C42] text-white px-8 py-4 rounded-lg font-body text-label-lg uppercase hover:scale-105 transition-transform duration-200 shadow-ambient-sm text-center">
+                        Browse Hotels
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
 {% endblock %}
